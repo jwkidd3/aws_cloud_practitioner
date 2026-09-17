@@ -32,6 +32,8 @@ The AMI has Apache and the page baked in, but the page still names web-1. A **us
 | Setting | Value |
 |---|---|
 | Name | `userN-web-2` |
+| Key pair | `userN-key` |
+| VPC | `userN-vpc` |
 | Subnet | **`userN-subnet-public2-us-east-2b`** |
 | Auto-assign public IP | Enable |
 | Security group | existing → `userN-web-sg` |

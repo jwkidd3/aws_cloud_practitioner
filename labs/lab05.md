@@ -4,7 +4,7 @@
 ## 🎯 Objectives
 - Create a bucket, upload an object, and recover an old version
 - Host a static website from S3
-- Read the bucket from EC2 using the IAM role
+- Read the bucket from EC2 using the IAM role (`userN-ec2-role`)
 
 **Before you start:** save this as `index.html` on your computer:
 ```html

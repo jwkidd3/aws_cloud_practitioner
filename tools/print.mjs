@@ -55,8 +55,12 @@ if (mode === 'deck') {
   for (let i = 0; i < total; i++) {
     await evaluate(`document.querySelectorAll('.pdf-page').forEach((p, j) => p.style.display = j === ${i} ? '' : 'none'); true`);
     await sleep(100);
-    const buf = await printToPDF({ paperWidth: w, paperHeight: h, marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, pageRanges: '1' });
-    if (!buf) fail(`printToPDF failed on slide ${i + 1}`);
+    let buf = null;
+    for (let attempt = 0; attempt < 4 && !buf; attempt++) {   // the printer occasionally fails a job; retrying succeeds
+      if (attempt) await sleep(1000 * attempt);
+      buf = await printToPDF({ paperWidth: w, paperHeight: h, marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, pageRanges: '1' });
+    }
+    if (!buf) fail(`printToPDF failed on slide ${i + 1} after 4 attempts`);
     const f = join(work, `slide${String(i).padStart(3, '0')}.pdf`); writeFileSync(f, buf); parts.push(f);
   }
   execFileSync('pdfunite', [...parts, out]);
@@ -69,8 +73,12 @@ if (mode === 'deck') {
     await waitFor("document.readyState === 'complete'");
     await evaluate("document.fonts ? document.fonts.ready.then(() => true) : true");
     await sleep(300);
-    const buf = await printToPDF({ paperWidth: 8.5, paperHeight: 11, marginTop: 0.7, marginBottom: 0.7, marginLeft: 0.75, marginRight: 0.75, preferCSSPageSize: false });
-    if (!buf) fail(`printToPDF failed for ${src}`);
+    let buf = null;
+    for (let attempt = 0; attempt < 4 && !buf; attempt++) {
+      if (attempt) await sleep(1000 * attempt);
+      buf = await printToPDF({ paperWidth: 8.5, paperHeight: 11, marginTop: 0.7, marginBottom: 0.7, marginLeft: 0.75, marginRight: 0.75, preferCSSPageSize: false });
+    }
+    if (!buf) fail(`printToPDF failed for ${src} after 4 attempts`);
     writeFileSync(out, buf);
     console.log(`wrote ${out}`);
   }

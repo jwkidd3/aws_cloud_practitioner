@@ -40,7 +40,7 @@ Work top to bottom.
 | ☐ | `userN-db-subnets` | RDS → Subnet groups | Delete (after the database is gone) |
 | ☐ | `userN-hello` | Lambda | Actions → Delete |
 | ☐ | `userN-bucket-XXXX` | S3 | **Empty** first, then **Delete** |
-| ☐ | `userN-vpc` | VPC → Your VPCs | Actions → **Delete VPC** (removes subnets, IGW, security groups). If refused, the RDS instance is still deleting — wait and retry. |
+| ☐ | `userN-vpc` | VPC → Your VPCs | Actions → **Delete VPC** (removes its subnets, IGW, `userN-web-sg` and `userN-db-sg`). If refused, the RDS instance is still deleting — wait and retry. |
 | ☐ | `userN-budget` | Billing → Budgets | Delete |
 | ☐ | `userN-dev`, `userN-developers`, `userN-ec2-role` | IAM | Delete each |
 

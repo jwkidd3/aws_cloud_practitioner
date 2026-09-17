@@ -26,7 +26,7 @@
 4. **Add user to group** → check `userN-developers` → **Next** → **Create user**.
 5. Copy the **Console sign-in URL** shown on the confirmation page.
 
-## Exercise 1.4: Test Least Privilege (10 min)
+## Exercise 1.4: Test Least Privilege (13 min)
 1. Open a **private/incognito window** and go to the sign-in URL. Sign in as `userN-dev`. Set Region to us-east-2.
 2. Open **S3**. You can see the bucket list — the policy allows listing.
 3. Choose **Create bucket**, type any name, and click **Create bucket** at the bottom. Read the error: `s3:CreateBucket` is not allowed.
