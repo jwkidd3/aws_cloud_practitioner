@@ -116,7 +116,7 @@ The day is scheduled at 225 min labs / 105 min theory. Every theory block is 5�
 
 ## 7. Room Setup on the Day
 
-- Deck: open `presentations/aws_cloud_practitioner.html` in Chrome or Edge, press `F`. It needs internet access for the Reveal.js CDN. Slides auto-fit; if a projector is unusually narrow, the fit routine re-runs on resize.
+- Deck: open `presentations/aws_cloud_practitioner.html` in Chrome or Edge (it loads Reveal.js from a CDN, so it needs internet). `F` full screen, `O` overview, `S` speaker notes. Slides auto-fit to the screen. Section dividers and lab callout slides mark every hand-off to a lab. `pdf/aws_cloud_practitioner_slides.pdf` is the offline copy.
 - Have your own `user0` identity so you can demo every lab live on the projector.
 - Pre-create nothing for students — the point is that they build it.
 - Keep the [Lab 8 cleanup table](lab-exercises/lab08/README.md) on screen for the last 12 minutes.
@@ -157,6 +157,6 @@ Then: re-enable account-level S3 Block Public Access, and disable or delete the 
 
 ## 9. Content Notes
 
-- The deck and labs target **CLF-C02** (65 questions, 90 min, 700/1000; domains 24/30/34/12). The legacy `Slides.pdf` is CLF-C01 material (60 questions, 28/24/36/12, Classic Load Balancer, OpsWorks, per-hour billing, eventual S3 consistency, five pillars) — use it only as background reading; do not present from it.
+- The legacy `Slides.pdf` is CLF-C01 material (60 questions, old domain weights, Classic Load Balancer, OpsWorks, per-hour billing, eventual S3 consistency, five pillars) — background reading only; do not present from it. Exam facts and domain mapping are in the README.
 - Current facts baked into the deck: six Well-Architected pillars; S3 strong consistency; per-second EC2 billing; ALB/NLB/GWLB; Savings Plans; IAM Identity Center; Sustainability pillar; Snowmobile retired.
 - Language: describe the course level as "introductory" in all materials and when speaking to the class.

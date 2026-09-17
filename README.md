@@ -85,8 +85,6 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 | [7](lab-exercises/lab07/README.md) | Setting Up a Relational Database with RDS | 5 + 25 min | MySQL in the VPC behind the DB security group; connect from EC2; find backups/Multi-AZ |
 | [8](lab-exercises/lab08/README.md) | Implementing Cost Optimization Strategies | 30 min | Pricing Calculator comparison; Budget; rightsize an instance; cleanup |
 
-Each lab is deliberately limited to its core task so it finishes inside its slot — that is what keeps the day at 70% hands-on.
-
 ## Course Materials
 
 ```
@@ -94,7 +92,7 @@ aws_cloud_pract/
 ├── README.md                                # This file — overview and schedule
 ├── INSTRUCTOR_NOTES.md                      # Pre-flight checklist: account setup, quotas, timing, known issues
 ├── AWS Cloud Practitioner.docx              # Published course outline
-├── Slides.pdf                               # Legacy 3-day source deck (reference only; CLF-C01 era)
+├── Slides.pdf                               # Legacy 3-day source deck (see INSTRUCTOR_NOTES §9)
 ├── build-pdfs.sh                            # Regenerates everything under pdf/ from the sources (~1 min)
 ├── tools/print.mjs                          # Chrome DevTools PDF printer used by build-pdfs.sh
 ├── presentations/
@@ -124,9 +122,7 @@ Every deliverable exists in its source format (HTML / Markdown) and as a PDF. Af
 ## Getting Started
 
 ### For Instructors
-1. Read [`INSTRUCTOR_NOTES.md`](INSTRUCTOR_NOTES.md) **at least two days before class** — service quotas and Cost Explorer need lead time.
-2. Open [`presentations/aws_cloud_practitioner.html`](presentations/aws_cloud_practitioner.html) in a browser (it loads Reveal.js from a CDN, so an internet connection is required). Press `O` for the overview, `S` for speaker notes, `F` for full screen. Slides auto-scale to fill the screen. A PDF of the deck is in [`pdf/`](pdf/) for offline use or handouts.
-3. Section dividers and lab callout slides mark every hand-off to a lab; the callout summarizes what students will build.
+Everything you need before and during class day — account setup, quotas, timing, known failure points, room setup and the post-class sweep — is in [`INSTRUCTOR_NOTES.md`](INSTRUCTOR_NOTES.md). Read it at least two days before class.
 
 ### For Students
 1. Get your username (`userN`), sign-in URL and password from the instructor.
