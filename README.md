@@ -90,7 +90,6 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 ```
 aws_cloud_pract/
 ├── README.md                                # This file — overview and schedule
-├── INSTRUCTOR_NOTES.md                      # Pre-flight checklist: account setup, quotas, timing, known issues
 ├── build-pdfs.sh                            # Regenerates everything under pdf/ from the sources (~1 min)
 ├── tools/print.mjs                          # Chrome DevTools PDF printer used by build-pdfs.sh
 ├── presentations/
@@ -98,8 +97,7 @@ aws_cloud_pract/
 ├── pdf/                                     # PDF copies of every deliverable (rebuild with ./build-pdfs.sh)
 │   ├── aws_cloud_practitioner_slides.pdf    # Deck, one page per slide
 │   ├── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
-│   ├── README.pdf
-│   └── INSTRUCTOR_NOTES.pdf
+│   └── README.pdf
 └── lab-exercises/
     ├── lab01/README.md                      # IAM roles and policies
     ├── lab02/README.md                      # Security groups and network ACLs (VPC build)
@@ -118,9 +116,6 @@ Every deliverable exists in its source format (HTML / Markdown) and as a PDF. Af
 ```
 
 ## Getting Started
-
-### For Instructors
-Everything you need before and during class day — account setup, quotas, timing, known failure points, room setup and the post-class sweep — is in [`INSTRUCTOR_NOTES.md`](INSTRUCTOR_NOTES.md). Read it at least two days before class.
 
 ### For Students
 1. Get your username (`userN`), sign-in URL and password from the instructor.

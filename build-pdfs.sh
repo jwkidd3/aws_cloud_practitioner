@@ -20,7 +20,7 @@ if ! $SKIP_DECK; then
     "$OUT/aws_cloud_practitioner_slides.pdf"
 fi
 
-# --- 3. Markdown (README, instructor notes): pandoc -> HTML, then printed on US Letter ---
+# --- 3. Markdown (README): pandoc -> HTML, then printed on US Letter ---
 cat > "$TMP/print.css" <<'CSS'
 body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; line-height: 1.4; color: #222; max-width: none; margin: 0; }
 h1 { color: #232f3e; border-bottom: 3px solid #ff9900; padding-bottom: 4px; font-size: 20pt; }
@@ -50,7 +50,6 @@ PY
 }
 JOBS=()
 md2html README.md "$TMP/README.html";                   JOBS+=("$TMP/README.html=$OUT/README.pdf")
-md2html INSTRUCTOR_NOTES.md "$TMP/INSTRUCTOR_NOTES.html"; JOBS+=("$TMP/INSTRUCTOR_NOTES.html=$OUT/INSTRUCTOR_NOTES.pdf")
 
 # --- 4. Student lab manual: cover + all eight labs in one PDF ---
 python3 - "$TMP" <<'PY'
