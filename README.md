@@ -96,8 +96,7 @@ aws_cloud_pract/
 │   └── aws_cloud_practitioner.html          # Reveal.js deck for the whole day (single file, 58 slides)
 ├── pdf/                                     # PDF copies of every deliverable (rebuild with ./build-pdfs.sh)
 │   ├── aws_cloud_practitioner_slides.pdf    # Deck, one page per slide
-│   ├── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
-│   └── README.pdf
+│   └── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
 └── lab-exercises/
     ├── lab01/README.md                      # IAM roles and policies
     ├── lab02/README.md                      # Security groups and network ACLs (VPC build)

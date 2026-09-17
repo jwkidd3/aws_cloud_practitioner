@@ -20,7 +20,7 @@ if ! $SKIP_DECK; then
     "$OUT/aws_cloud_practitioner_slides.pdf"
 fi
 
-# --- 3. Markdown (README): pandoc -> HTML, then printed on US Letter ---
+# --- 3. Print CSS for the Markdown-based lab manual ---
 cat > "$TMP/print.css" <<'CSS'
 body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; line-height: 1.4; color: #222; max-width: none; margin: 0; }
 h1 { color: #232f3e; border-bottom: 3px solid #ff9900; padding-bottom: 4px; font-size: 20pt; }
@@ -49,7 +49,6 @@ open(p,'w').write(t)
 PY
 }
 JOBS=()
-md2html README.md "$TMP/README.html";                   JOBS+=("$TMP/README.html=$OUT/README.pdf")
 
 # --- 4. Student lab manual: cover + all eight labs in one PDF ---
 python3 - "$TMP" <<'PY'
