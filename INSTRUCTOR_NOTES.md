@@ -157,6 +157,5 @@ Then: re-enable account-level S3 Block Public Access, and disable or delete the 
 
 ## 9. Content Notes
 
-- The legacy `Slides.pdf` is CLF-C01 material (60 questions, old domain weights, Classic Load Balancer, OpsWorks, per-hour billing, eventual S3 consistency, five pillars) — background reading only; do not present from it. Exam facts and domain mapping are in the README.
 - Current facts baked into the deck: six Well-Architected pillars; S3 strong consistency; per-second EC2 billing; ALB/NLB/GWLB; Savings Plans; IAM Identity Center; Sustainability pillar; Snowmobile retired.
 - Language: describe the course level as "introductory" in all materials and when speaking to the class.

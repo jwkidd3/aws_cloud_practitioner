@@ -91,7 +91,6 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 aws_cloud_pract/
 ├── README.md                                # This file — overview and schedule
 ├── INSTRUCTOR_NOTES.md                      # Pre-flight checklist: account setup, quotas, timing, known issues
-├── Slides.pdf                               # Legacy 3-day source deck (see INSTRUCTOR_NOTES §9)
 ├── build-pdfs.sh                            # Regenerates everything under pdf/ from the sources (~1 min)
 ├── tools/print.mjs                          # Chrome DevTools PDF printer used by build-pdfs.sh
 ├── presentations/
