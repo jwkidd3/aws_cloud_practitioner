@@ -90,11 +90,12 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 ```
 aws_cloud_pract/
 ├── README.md                                # This file — overview and schedule
-├── build-pdfs.sh                            # Regenerates everything under pdf/ from the sources (~1 min)
-├── tools/print.mjs                          # Chrome DevTools PDF printer used by build-pdfs.sh
+├── tools/
+│   ├── build-pdfs.sh                        # Regenerates everything under pdf/ from the sources (~1 min)
+│   └── print.mjs                            # Chrome DevTools PDF printer used by build-pdfs.sh
 ├── presentations/
 │   └── aws_cloud_practitioner.html          # Reveal.js deck for the whole day (single file, 58 slides)
-├── pdf/                                     # PDF copies of every deliverable (rebuild with ./build-pdfs.sh)
+├── pdf/                                     # PDF copies of every deliverable (rebuild with tools/build-pdfs.sh)
 │   ├── aws_cloud_practitioner_slides.pdf    # Deck, one page per slide
 │   └── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
 └── lab-exercises/
@@ -111,7 +112,7 @@ aws_cloud_pract/
 Every deliverable exists in its source format (HTML / Markdown) and as a PDF. After editing any source, run (needs Google Chrome, Node 22+, pandoc and poppler):
 
 ```bash
-./build-pdfs.sh
+tools/build-pdfs.sh
 ```
 
 ## Getting Started

@@ -1,10 +1,10 @@
 #!/bin/bash
-# Regenerates every PDF under pdf/ from its source. Run from the course root after editing any lab or the deck.
-#   ./build-pdfs.sh              everything (deck takes ~1 min)
-#   ./build-pdfs.sh --no-deck     skip the deck
+# Regenerates every PDF under pdf/ from its source. Run after editing any lab or the deck (from any directory).
+#   tools/build-pdfs.sh              everything (deck takes ~1 min)
+#   tools/build-pdfs.sh --no-deck    skip the deck
 # Requires: Google Chrome, node 22+, pandoc, pdfunite (poppler), python3.
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."   # course root
 OUT="$PWD/pdf"; mkdir -p "$OUT"
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"; kill $SRV 2>/dev/null || true' EXIT
 SKIP_DECK=false; [[ "${1:-}" == "--no-deck" ]] && SKIP_DECK=true
