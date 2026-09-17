@@ -1,11 +1,10 @@
 #!/bin/bash
-# Regenerates every PDF under pdf/ from its source. Run after editing any lab or the deck (from any directory).
+# Regenerates the deck and lab-manual PDFs next to their sources. Run after editing any lab or the deck (from any directory).
 #   tools/build-pdfs.sh              everything (deck takes ~1 min)
 #   tools/build-pdfs.sh --no-deck    skip the deck
 # Requires: Google Chrome, node 22+, pandoc, pdfunite (poppler), python3.
 set -euo pipefail
 cd "$(dirname "$0")/.."   # course root
-OUT="$PWD/pdf"; mkdir -p "$OUT"
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"; kill $SRV 2>/dev/null || true' EXIT
 SKIP_DECK=false; [[ "${1:-}" == "--no-deck" ]] && SKIP_DECK=true
 
@@ -17,7 +16,7 @@ sleep 1
 # --- 2. Deck: Reveal.js print-pdf mode, one page per slide ---
 if ! $SKIP_DECK; then
   node tools/print.mjs deck "http://127.0.0.1:$PORT/presentations/aws_cloud_practitioner.html?print-pdf" \
-    "$OUT/aws_cloud_practitioner_slides.pdf"
+    "$PWD/presentations/aws_cloud_practitioner.pdf"
 fi
 
 # --- 3. Print CSS for the Markdown-based lab manual ---
@@ -60,6 +59,6 @@ cover='''<div style="text-align:center;padding-top:35vh"><h1 style="border:0;fon
 <p style="font-size:16pt;color:#ff9900;font-weight:600">Student Lab Manual</p><p>Labs 1 – 8 · Region us-east-2 · prefix every resource with your username</p></div>'''
 open(f'{T}/manual.html','w').write(f'<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lab Manual</title><style>{css}</style></head><body>{cover}{"".join(parts)}</body></html>')
 PY
-JOBS+=("$TMP/manual.html=$OUT/aws_cloud_practitioner_lab_manual.pdf")
+JOBS+=("$TMP/manual.html=$PWD/lab-exercises/lab_manual.pdf")
 
 node tools/print.mjs pages "${JOBS[@]}"

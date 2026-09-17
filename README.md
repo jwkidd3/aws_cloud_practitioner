@@ -91,14 +91,13 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 aws_cloud_pract/
 ├── README.md                                # This file — overview and schedule
 ├── tools/
-│   ├── build-pdfs.sh                        # Regenerates everything under pdf/ from the sources (~1 min)
+│   ├── build-pdfs.sh                        # Regenerates both PDFs from the sources (~1 min)
 │   └── print.mjs                            # Chrome DevTools PDF printer used by build-pdfs.sh
 ├── presentations/
-│   └── aws_cloud_practitioner.html          # Reveal.js deck for the whole day (single file, 58 slides)
-├── pdf/                                     # PDF copies of every deliverable (rebuild with tools/build-pdfs.sh)
-│   ├── aws_cloud_practitioner_slides.pdf    # Deck, one page per slide
-│   └── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
+│   ├── aws_cloud_practitioner.html          # Reveal.js deck for the whole day (single file, 58 slides)
+│   └── aws_cloud_practitioner.pdf           # Same deck, one page per slide
 └── lab-exercises/
+    ├── lab_manual.pdf                       # All 8 labs in one student handout
     ├── lab01/README.md                      # IAM roles and policies
     ├── lab02/README.md                      # Security groups and network ACLs (VPC build)
     ├── lab03/README.md                      # Creating EC2 instances
