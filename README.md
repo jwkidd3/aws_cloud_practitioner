@@ -76,14 +76,14 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 
 | Lab | Title | Duration | Core task |
 |---|---|---|---|
-| [1](lab-exercises/lab01.md) | Configuring IAM Roles and Policies | 30 min | Group + user with a managed policy; test least privilege; EC2 role |
-| [2](lab-exercises/lab02.md) | Configuring Security Groups and Network ACLs | 30 min | VPC (2 AZs) via wizard; web and DB security groups; one NACL Deny rule |
-| [3](lab-exercises/lab03.md) | Creating EC2 Instances | 25 min | Key pair; launch Amazon Linux 2023 with the role; connect via Instance Connect |
-| [4](lab-exercises/lab04.md) | Deploying a Web Application on EC2 | 30 min | Install Apache + page; create AMI; launch second server with user data |
-| [5](lab-exercises/lab05.md) | Using S3 for Object Storage | 25 min | Versioned bucket; static website with bucket policy; read from EC2 via role |
-| [6](lab-exercises/lab06.md) | Implementing Serverless Functions with Lambda | 25 min | Python function; test + logs; Function URL |
-| [7](lab-exercises/lab07.md) | Setting Up a Relational Database with RDS | 5 + 25 min | MySQL in the VPC behind the DB security group; connect from EC2; find backups/Multi-AZ |
-| [8](lab-exercises/lab08.md) | Implementing Cost Optimization Strategies | 30 min | Pricing Calculator comparison; Budget; rightsize an instance; cleanup |
+| [1](labs/lab01.md) | Configuring IAM Roles and Policies | 30 min | Group + user with a managed policy; test least privilege; EC2 role |
+| [2](labs/lab02.md) | Configuring Security Groups and Network ACLs | 30 min | VPC (2 AZs) via wizard; web and DB security groups; one NACL Deny rule |
+| [3](labs/lab03.md) | Creating EC2 Instances | 25 min | Key pair; launch Amazon Linux 2023 with the role; connect via Instance Connect |
+| [4](labs/lab04.md) | Deploying a Web Application on EC2 | 30 min | Install Apache + page; create AMI; launch second server with user data |
+| [5](labs/lab05.md) | Using S3 for Object Storage | 25 min | Versioned bucket; static website with bucket policy; read from EC2 via role |
+| [6](labs/lab06.md) | Implementing Serverless Functions with Lambda | 25 min | Python function; test + logs; Function URL |
+| [7](labs/lab07.md) | Setting Up a Relational Database with RDS | 5 + 25 min | MySQL in the VPC behind the DB security group; connect from EC2; find backups/Multi-AZ |
+| [8](labs/lab08.md) | Implementing Cost Optimization Strategies | 30 min | Pricing Calculator comparison; Budget; rightsize an instance; cleanup |
 
 ## Course Materials
 
@@ -96,7 +96,7 @@ aws_cloud_pract/
 ├── presentations/
 │   ├── aws_cloud_practitioner.html          # Reveal.js deck for the whole day (single file, 58 slides)
 │   └── aws_cloud_practitioner.pdf           # Same deck, one page per slide
-└── lab-exercises/
+└── labs/
     ├── lab_manual.pdf                       # All 8 labs in one student handout
     ├── lab01.md                             # IAM roles and policies
     ├── lab02.md                             # Security groups and network ACLs (VPC build)
@@ -118,7 +118,7 @@ tools/build-pdfs.sh
 
 ### For Students
 1. Get your username (`userN`), sign-in URL and password from the instructor.
-2. Begin with [Lab 1 — Configuring IAM Roles and Policies](lab-exercises/lab01.md) when the instructor reaches the first lab callout.
+2. Begin with [Lab 1 — Configuring IAM Roles and Policies](labs/lab01.md) when the instructor reaches the first lab callout.
 3. Complete Labs 1–8 in order; each lab lists what to keep for later labs and what to clean up.
 
 ## Exam Alignment (CLF-C02)
