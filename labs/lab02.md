@@ -1,5 +1,5 @@
 # Lab 2: Configuring Security Groups and Network ACLs
-**Duration:** 30 minutes · **Region:** us-east-2 (Ohio)
+**Duration:** 30 minutes · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Build a VPC with two public subnets, an Internet Gateway and a route table
@@ -9,15 +9,15 @@
 **What you build (used by Labs 3–7):**
 ```
 VPC userN-vpc 10.0.0.0/16
- ├─ Public subnet 1 (us-east-2a) ── web server (Lab 3)        security group: userN-web-sg  (80, 22 from anywhere)
- ├─ Public subnet 2 (us-east-2b) ── web server 2 (Lab 4), RDS (Lab 7)   userN-db-sg (3306 from userN-web-sg)
+ ├─ Public subnet 1 (AZ a) ── web server (Lab 3)                security group: userN-web-sg  (80, 22 from anywhere)
+ ├─ Public subnet 2 (AZ b) ── web server 2 (Lab 4), RDS (Lab 7)   userN-db-sg (3306 from userN-web-sg)
  └─ Route table: 0.0.0.0/0 → Internet Gateway
 ```
 
 ---
 
 ## Exercise 2.1: Create the VPC (8 min)
-1. Search **VPC** → **Create VPC** → choose **VPC and more**.
+1. Search **VPC** (confirm your assigned Region is selected) → **Create VPC** → choose **VPC and more**.
 2. Settings:
 
 | Setting | Value |
@@ -33,7 +33,7 @@ VPC userN-vpc 10.0.0.0/16
 3. **Create VPC**. Wait for the green checks, then **View VPC**.
 
 ## Exercise 2.2: Enable Public IPs and Check the Route (5 min)
-1. **Subnets** → for **each** of your two `userN-subnet-public…` subnets: select it → **Actions** → **Edit subnet settings** → check **Enable auto-assign public IPv4 address** → **Save**. (The wizard does not do this for you.)
+1. **Subnets** → for **each** of your two `userN-subnet-public…` subnets (the wizard named them after the two AZs it picked in your Region — call them **subnet 1** and **subnet 2** from here on): select it → **Actions** → **Edit subnet settings** → check **Enable auto-assign public IPv4 address** → **Save**. (The wizard does not do this for you.)
 2. **Route tables** → open `userN-rtb-public` → **Routes** tab. You will see `10.0.0.0/16 → local` and `0.0.0.0/0 → igw-…`. That second route is what makes the subnets public.
 
 ## Exercise 2.3: Web Security Group (5 min)

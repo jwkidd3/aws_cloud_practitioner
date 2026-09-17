@@ -1,5 +1,5 @@
 # Lab 6: Implementing Serverless Functions with Lambda
-**Duration:** 25 minutes · **Region:** us-east-2 (Ohio)
+**Duration:** 25 minutes · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Create and test a Python Lambda function

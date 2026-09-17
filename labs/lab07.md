@@ -1,5 +1,5 @@
 # Lab 7: Setting Up a Relational Database with RDS
-**Duration:** Part A 5 min (before the break) + Part B 25 min · **Region:** us-east-2 (Ohio)
+**Duration:** Part A 5 min (before the break) + Part B 25 min · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Launch a managed MySQL database inside your VPC
@@ -15,7 +15,7 @@
 ## Exercise 7.1: DB Subnet Group (2 min)
 1. Search **RDS** → **Subnet groups** → **Create DB subnet group**.
 2. Name `userN-db-subnets`, description `lab`, VPC `userN-vpc`.
-3. Availability Zones: **us-east-2a and us-east-2b**. Subnets: select **both** of your subnets. **Create**.
+3. Availability Zones: select the **two AZs your subnets are in**. Subnets: select **both** of your subnets. **Create**.
 
 ## Exercise 7.2: Create the Database (3 min)
 **Databases** → **Create database** → **Standard create**. Everything not listed stays default:

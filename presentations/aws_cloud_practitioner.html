@@ -319,7 +319,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="highlight"><p><strong>Lab conventions:</strong> everyone shares one AWS account in <strong>us-east-2 (Ohio)</strong>. Prefix every resource you create with your assigned username, e.g. <code>user7-web-sg</code>. Labs build on each other — keep resources until Lab 8's cleanup.</p></div>
+                <div class="highlight"><p><strong>Lab conventions:</strong> everyone shares one AWS account and works in an <strong>assigned Region</strong> — select it first, every time. Prefix every resource you create with your assigned username, e.g. <code>user7-web-sg</code>. Labs build on each other — keep resources until Lab 8's cleanup.</p></div>
             </section>
             <!-- Module 1 divider -->
             <section class="section-divider" data-background-color="#232f3e">
@@ -434,8 +434,8 @@
                     <div class="column">
                         <p>You will need these three terms for every lab today. Module 3 covers the global infrastructure in depth.</p>
                         <ul>
-                            <li><strong>Region</strong> — a geographic area with its own independent set of AWS resources, e.g. <code>us-east-2</code> (Ohio). <em>Today's labs all run in us-east-2.</em></li>
-                            <li><strong>Availability Zone (AZ)</strong> — one or more isolated data centers inside a Region (<code>us-east-2a</code>, <code>2b</code>, <code>2c</code>). Spreading across AZs is how you survive a data-center failure.</li>
+                            <li><strong>Region</strong> — a geographic area with its own independent set of AWS resources, e.g. <code>us-east-2</code> (Ohio). <em>You have been assigned a Region for today — every lab runs there.</em></li>
+                            <li><strong>Availability Zone (AZ)</strong> — one or more isolated data centers inside a Region (named <code>&lt;region&gt;a</code>, <code>b</code>, <code>c</code> …). Spreading across AZs is how you survive a data-center failure.</li>
                             <li><strong>Edge location</strong> — hundreds of small sites worldwide used by CloudFront and Route 53 to serve content close to users.</li>
                         </ul>
                         <div class="highlight"><p><strong>Scope matters:</strong> IAM and Route 53 are <em>global</em>. VPC, EC2, RDS and most others are <em>Regional</em> — pick the wrong Region in the console and your resources "disappear".</p></div>
@@ -651,7 +651,7 @@ SDK/IaC  --+                          and authorizes --> service acts</div>
                     <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
                         <h3>🎯 What You'll Build:</h3>
                         <ul style="font-size: 1.1em; line-height: 1.6;">
-                            <li>✅ Sign in and set your Region to us-east-2</li>
+                            <li>✅ Sign in and switch to your assigned Region</li>
                             <li>✅ An IAM group with S3 read-only access, and a user in it</li>
                             <li>✅ Sign in as that user and see least privilege in action</li>
                             <li>✅ An IAM role for EC2 — used by your web server in Labs 3 and 5</li>
@@ -705,9 +705,9 @@ SDK/IaC  --+                          and authorizes --> service acts</div>
             <!-- Diagram -->
             <section>
                 <h2><span class="emoji">🗺️</span> The Network You Will Build Today</h2>
-                <div class="architecture-diagram">+------------------------------ VPC  userN-vpc  10.0.0.0/16  (us-east-2) ------------------------------+
+                <div class="architecture-diagram">+---------------------------- VPC  userN-vpc  10.0.0.0/16  (your Region) ----------------------------+
 |                                                                                                       |
-|  +-- Public subnet 1  10.0.0.0/20  (us-east-2a) --+    +-- Public subnet 2  10.0.16.0/20  (us-east-2b) --+  |
+|  +-- Public subnet 1  10.0.0.0/20  (AZ a) -------+    +-- Public subnet 2  10.0.16.0/20  (AZ b) --------+  |
 |  |   Network ACL: default (+ Deny rule, Lab 2)    |    |   Network ACL: default                           |  |
 |  |                                                |    |                                                  |  |
 |  |   [ EC2 web server  (Lab 3 / 4) ]              |    |   [ EC2 web server #2  (Lab 4) ]                 |  |
@@ -1271,10 +1271,10 @@ schedule  --> EventBridge   --> Lambda --> stop idle EC2</div>
                             <li>Designed so a fire, flood or power loss in one AZ does not affect the others</li>
                             <li>Services like S3, DynamoDB and Lambda are Regional and use multiple AZs for you; EC2, EBS, subnets and RDS instances are <em>zonal</em> — <strong>you</strong> spread them across AZs</li>
                         </ul>
-                        <div class="architecture-diagram">Region us-east-2
- |- AZ us-east-2a  -  data center(s)  -  your subnet 1, web-1, RDS primary
- |- AZ us-east-2b  -  data center(s)  -  your subnet 2, web-2, RDS standby
- +- AZ us-east-2c  -  data center(s)</div>
+                        <div class="architecture-diagram">Your Region
+ |- AZ a  -  data center(s)  -  your subnet 1, web-1, RDS primary
+ |- AZ b  -  data center(s)  -  your subnet 2, web-2, RDS standby
+ +- AZ c  -  data center(s)</div>
                         <div class="exam-tip"><p><strong>📝 Exam tip:</strong> Multi-AZ = high availability within a Region. Multi-Region = disaster recovery and global latency. "AZ" letters map differently per account, so <code>us-east-2a</code> is not the same building for everyone.</p></div>
                     </div>
                 </div>

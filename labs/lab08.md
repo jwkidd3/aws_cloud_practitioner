@@ -1,5 +1,5 @@
 # Lab 8: Implementing Cost Optimization Strategies
-**Duration:** 30 minutes · **Region:** us-east-2 (Ohio)
+**Duration:** 30 minutes · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Compare On-Demand and Savings Plan pricing for your web server
@@ -11,7 +11,7 @@
 
 ## Exercise 8.1: Price It (6 min)
 1. Open https://calculator.aws → **Create estimate** → **Add service** → **Amazon EC2** → **Configure**.
-2. Region **US East (Ohio)**, Linux, instance **t3.micro**, quantity **2**, utilization 100%.
+2. Region: **your assigned Region**, Linux, instance **t3.micro**, quantity **2**, utilization 100%.
 3. **Payment option: On-Demand** → note the monthly cost.
 4. Change to **Compute Savings Plans, 1 year, No upfront** → note the new monthly cost.
 

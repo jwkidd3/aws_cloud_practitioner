@@ -1,5 +1,5 @@
 # Lab 1: Configuring IAM Roles and Policies
-**Duration:** 30 minutes · **Region:** us-east-2 (Ohio) · **Prefix everything with your username:** `userN-`
+**Duration:** 30 minutes · **Region:** your assigned Region · **Prefix everything with your username:** `userN-`
 
 ## 🎯 Objectives
 - Create an IAM group and user with a managed policy
@@ -10,7 +10,7 @@
 
 ## Exercise 1.1: Sign In (3 min)
 1. Open the sign-in URL from your instructor and sign in with your IAM user name and password.
-2. Top-right **Region selector** → **US East (Ohio) us-east-2**.
+2. Top-right **Region selector** → choose **your assigned Region**. Every lab today runs there; check it whenever a console page looks empty.
 3. Search for **IAM** and open it. Note the Region now shows **Global** — IAM is not Regional.
 
 ## Exercise 1.2: Create a Group (4 min)
@@ -27,7 +27,7 @@
 5. Copy the **Console sign-in URL** shown on the confirmation page.
 
 ## Exercise 1.4: Test Least Privilege (13 min)
-1. Open a **private/incognito window** and go to the sign-in URL. Sign in as `userN-dev`. Set Region to us-east-2.
+1. Open a **private/incognito window** and go to the sign-in URL. Sign in as `userN-dev`. Set the Region to your assigned Region.
 2. Open **S3**. You can see the bucket list — the policy allows listing.
 3. Choose **Create bucket**, type any name, and click **Create bucket** at the bottom. Read the error: `s3:CreateBucket` is not allowed.
 4. Open **EC2** → **Instances**. You are denied — the policy says nothing about EC2, so it is implicitly denied.

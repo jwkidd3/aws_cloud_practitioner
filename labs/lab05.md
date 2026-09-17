@@ -1,5 +1,5 @@
 # Lab 5: Using S3 for Object Storage
-**Duration:** 25 minutes · **Region:** us-east-2 (Ohio)
+**Duration:** 25 minutes · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Create a bucket, upload an object, and recover an old version
@@ -15,7 +15,7 @@
 
 ## Exercise 5.1: Create a Bucket (4 min)
 1. Search **S3** → **Create bucket**.
-2. Region **us-east-2**. Name `userN-bucket-XXXX` (XXXX = any four digits; names are globally unique).
+2. Region: **your assigned Region**. Name `userN-bucket-XXXX` (XXXX = any four digits; names are globally unique).
 3. **Bucket Versioning: Enable**. Leave everything else default. **Create bucket**.
 
 ## Exercise 5.2: Upload and Version (6 min)

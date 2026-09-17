@@ -13,7 +13,7 @@ This course provides a comprehensive introduction to Amazon Web Services (AWS). 
 **Length:** 1 day (9:00 AM – 4:00 PM)
 **Format:** ~70% hands-on labs / ~30% theory (225 min labs, 105 min theory, plus breaks and lunch)
 **Level:** Introductory — no prior AWS experience assumed
-**Environment:** AWS Management Console in a shared AWS account, Region **us-east-2 (Ohio)**. No IDE or local tooling required.
+**Environment:** AWS Management Console in a shared AWS account; each student works in an **assigned Region**. No IDE or local tooling required.
 
 ## Course Objectives
 

@@ -1,5 +1,5 @@
 # Lab 3: Creating EC2 Instances
-**Duration:** 25 minutes · **Region:** us-east-2 (Ohio)
+**Duration:** 25 minutes · **Region:** your assigned Region
 
 ## 🎯 Objectives
 - Create a key pair and launch an Amazon Linux instance into your VPC
@@ -21,7 +21,7 @@
 | Instance type | `t3.micro` |
 | Key pair | `userN-key` |
 | Network settings → **Edit** → VPC | `userN-vpc` |
-| Subnet | `userN-subnet-public1-us-east-2a` |
+| Subnet | `userN-subnet-public1-…` (subnet 1) |
 | Auto-assign public IP | **Enable** |
 | Firewall | **Select existing security group** → `userN-web-sg` |
 | Advanced details → IAM instance profile | `userN-ec2-role` |
