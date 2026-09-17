@@ -54,7 +54,7 @@ python3 - "$TMP" <<'PY'
 import sys,subprocess,glob
 T=sys.argv[1]; css=open(f'{T}/print.css').read()
 parts=[f'<div class="page-break">{subprocess.run(["pandoc",f,"-f","gfm","-t","html5","--no-highlight"],capture_output=True,text=True).stdout}</div>'
-       for f in sorted(glob.glob('lab-exercises/lab0*/README.md'))]
+       for f in sorted(glob.glob('lab-exercises/lab0*.md'))]
 cover='''<div style="text-align:center;padding-top:35vh"><h1 style="border:0;font-size:30pt">AWS Cloud Practitioner</h1>
 <p style="font-size:16pt;color:#ff9900;font-weight:600">Student Lab Manual</p><p>Labs 1 – 8 · Region us-east-2 · prefix every resource with your username</p></div>'''
 open(f'{T}/manual.html','w').write(f'<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lab Manual</title><style>{css}</style></head><body>{cover}{"".join(parts)}</body></html>')
