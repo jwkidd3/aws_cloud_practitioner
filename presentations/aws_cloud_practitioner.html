@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud Practitioner — One-Day Course</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+    <style>
+        :root {
+            --aws-orange: #ff9900;
+            --aws-navy: #232f3e;
+            --aws-blue: #146eb4;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        .reveal {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 30px;
+            font-weight: 300;
+            color: #2c3e50;
+            overflow: hidden;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--aws-navy);
+            margin-bottom: 0.5em;
+            text-transform: none;
+        }
+
+        .reveal h1 { font-size: 1.7em; margin-bottom: 0.2em; }
+        .reveal h2 { font-size: 1.3em; margin-bottom: 0.2em; border-bottom: 3px solid var(--aws-orange); padding-bottom: 0.1em; }
+        .reveal h3 { font-size: 1.0em; margin-bottom: 0.1em; color: var(--aws-blue); }
+
+        .reveal .slides section {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 14px 18px;
+            box-sizing: border-box;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Reveal shows the current slide with display:block at higher specificity — keep it flex */
+        .reveal .slides > section.present { display: flex !important; }
+
+        /* Auto-fit wrapper: JS zooms this so each slide fills the page without overflowing */
+        .reveal .slides section > .fit {
+            width: 100%;
+            flex: none;
+            display: flex;
+            flex-direction: column;
+        }
+        .reveal .slides section.section-divider > .fit,
+        .reveal .slides section.title-slide > .fit,
+        .reveal .slides section.lab-callout > .fit { align-items: center; }
+
+        .reveal .slides { height: 100%; width: 100%; }
+
+        .reveal .slides section.title-slide { text-align: center; justify-content: center; align-items: center; }
+        .reveal .slides section.title-slide h1 { border: none; }
+        .reveal .slides section.title-slide .two-column { width: 100%; }
+
+        .reveal code {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.85em;
+        }
+
+        .reveal pre {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 10px 0;
+            width: 100%;
+            background-color: #272822;
+            padding: 0;
+            overflow: visible;
+        }
+
+        .reveal pre code {
+            padding: 15px;
+            font-size: 0.7em;
+            line-height: 1.2;
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: auto;
+            word-wrap: normal;
+            white-space: pre;
+            display: block;
+            background-color: #272822 !important;
+            border: none;
+            color: #f8f8f2 !important;
+        }
+
+        .reveal .two-column { display: flex; gap: 40px; }
+        .reveal .column { flex: 1; min-width: 0; }
+        .reveal .three-column { display: flex; gap: 20px; }
+        .reveal .three-column .column { flex: 1; }
+
+        .reveal .highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 4px solid var(--warning-color);
+            padding: 4px 8px; margin: 4px 0; border-radius: 4px;
+            font-size: 0.7em; line-height: 1.2;
+        }
+        .reveal .danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #fab1a0 100%);
+            border-left: 4px solid var(--danger-color);
+            padding: 4px 8px; margin: 4px 0; border-radius: 4px;
+            font-size: 0.7em; line-height: 1.2;
+        }
+        .reveal .success {
+            background: linear-gradient(135deg, #d4edda 0%, #a8e6cf 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 4px 8px; margin: 4px 0; border-radius: 4px;
+            font-size: 0.7em; line-height: 1.2;
+        }
+        .reveal .info {
+            background: linear-gradient(135deg, #e3f0fb 0%, #cfe6f8 100%);
+            border-left: 4px solid var(--aws-blue);
+            padding: 4px 8px; margin: 4px 0; border-radius: 4px;
+            font-size: 0.7em; line-height: 1.2;
+        }
+        .reveal .exam-tip {
+            background: linear-gradient(135deg, #fff4e0 0%, #ffe3b3 100%);
+            border-left: 4px solid var(--aws-orange);
+            padding: 4px 8px; margin: 6px 0; border-radius: 4px;
+            font-size: 0.7em; line-height: 1.2;
+        }
+
+        .reveal .aws-logo {
+            background: var(--aws-navy);
+            color: var(--aws-orange);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .reveal ul, .reveal ol { font-size: 0.7em; line-height: 1.2; margin: 0.2em 0 0.2em 0.5em; }
+        .reveal li { margin-bottom: 2px; }
+        .reveal .fragment { transition: all 0.3s ease; }
+        .reveal .subtitle { font-size: 1.2em; color: #666; margin-bottom: 40px; }
+        .reveal .emoji { font-size: 1.2em; }
+        .reveal p { font-size: 0.8em; }
+
+        .reveal .architecture-diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.5em;
+            line-height: 1.25;
+            white-space: pre;
+            overflow: hidden;
+            color: #2c3e50;
+        }
+
+        .reveal .progress-indicator {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--aws-navy); color: var(--aws-orange);
+            padding: 10px 15px; border-radius: 20px;
+            font-size: 0.7em; z-index: 1000;
+        }
+
+        .reveal table {
+            font-size: 0.6em;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+        .reveal table th, .reveal table td { padding: 4px 8px; border: 1px solid #ddd; font-size: inherit; vertical-align: top; text-align: left; }
+        .reveal table th { background: var(--aws-navy); color: white; }
+        .reveal table tr:nth-child(even) { background: #f6f8fa; }
+
+        .reveal .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
+        .reveal .pillar {
+            background: #f8f9fa; border: 2px solid #e9ecef; border-top: 5px solid var(--aws-orange);
+            border-radius: 8px; padding: 10px; font-size: 0.65em; line-height: 1.2;
+        }
+        .reveal .pillar strong { color: var(--aws-navy); font-size: 1.1em; display: block; margin-bottom: 4px; }
+
+        .reveal .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px; }
+        .reveal .service-card {
+            background: white; border: 2px solid #e9ecef; border-radius: 8px; padding: 8px 10px;
+            font-size: 0.6em; line-height: 1.2;
+        }
+        .reveal .service-card strong { color: var(--aws-orange); display: block; font-size: 1.15em; margin-bottom: 3px; }
+
+        .reveal .quiz-answer { background: #d4edda; border-left: 4px solid var(--success-color); padding: 6px 10px; margin-top: 10px; border-radius: 4px; font-size: 0.7em; }
+
+        @media screen and (min-width: 1600px) { .reveal { font-size: 32px; } }
+        @media screen and (max-width: 1400px) {
+            .reveal { font-size: 28px; }
+            .reveal ul, .reveal ol { font-size: 0.7em; }
+        }
+        @media screen and (max-width: 1024px) {
+            .reveal { font-size: 24px; }
+            .reveal .two-column, .reveal .three-column { flex-direction: column; gap: 15px; }
+            .reveal .pillar-grid { grid-template-columns: repeat(2, 1fr); }
+            .reveal .service-grid { grid-template-columns: repeat(2, 1fr); }
+            .reveal .slides section { padding: 8px; }
+        }
+
+
+        /* Lab callout slides */
+        .reveal .slides section.lab-callout {
+            display: flex; align-items: center; justify-content: center;
+            height: 100%; overflow: hidden; padding: 10px;
+        }
+        .reveal .lab-callout h1 { font-size: 1.3em; margin-bottom: 0.1em; line-height: 1.2; color: white; }
+        .reveal .lab-callout h2 { font-size: 1.0em; margin-bottom: 0.1em; line-height: 1.2; color: white; border: none; }
+        .reveal .lab-callout h3 { font-size: 0.9em; margin-bottom: 0.1em; line-height: 1.2; color: white; }
+        .reveal .lab-callout ul { font-size: 0.7em; line-height: 1.2; margin: 0.2em 0; }
+        .reveal .lab-callout li { margin: 0.1em 0; }
+        .reveal .lab-callout > div { padding: 8px; max-width: 95%; }
+        .reveal .lab-callout p { margin: 0.2em 0; font-size: 0.9em; }
+
+        /* Section divider slides */
+        .reveal .slides section.section-divider { justify-content: center; align-items: center; text-align: center; }
+        .reveal .section-divider h1 { color: white; border: none; font-size: 2em; }
+        .reveal .section-divider p { color: #e9ecef; font-size: 1em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section class="title-slide">
+                <h1><span class="emoji">☁️</span> AWS Cloud Practitioner</h1>
+                <div class="aws-logo">One-Day Hands-On Course</div>
+                <p class="subtitle">A hands-on introduction to Amazon Web Services</p>
+                <p><strong>Aligned to:</strong> AWS Certified Cloud Practitioner (CLF-C02)</p>
+                <div class="highlight">
+                    <p><strong>📚 Today:</strong> Five modules and eight hands-on labs in the AWS Management Console — roughly 70% of the day is at the keyboard. You will build a network, launch servers, deploy a web application, store objects, run serverless code, stand up a database, and optimize what it all costs.</p>
+                </div>
+            </section>
+
+            <!-- Course objectives -->
+            <section>
+                <h2><span class="emoji">🎯</span> Course Objectives</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Upon completion you will be able to</h3>
+                        <ul>
+                            <li class="fragment">Explain the core concepts of cloud computing and the benefits of using AWS</li>
+                            <li class="fragment">Identify and describe key AWS services, including EC2, S3, VPC, IAM, Lambda, RDS and more</li>
+                            <li class="fragment">Understand the AWS global infrastructure and Regions</li>
+                            <li class="fragment">Create and manage AWS resources using the AWS Management Console and CLI</li>
+                            <li class="fragment">Implement basic security best practices on AWS</li>
+                            <li class="fragment">Optimize AWS costs using various strategies</li>
+                            <li class="fragment">Prepare for the AWS Certified Cloud Practitioner exam</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Course modules</h3>
+                        <table>
+                            <tr><th>Module</th><th>Topic</th></tr>
+                            <tr><td>1</td><td>Introduction to Cloud Computing</td></tr>
+                            <tr><td>2</td><td>Core AWS Services — Security, Networking, Compute, Storage, Databases</td></tr>
+                            <tr><td>3</td><td>AWS Global Infrastructure</td></tr>
+                            <tr><td>4</td><td>Billing and Cost Optimization</td></tr>
+                            <tr><td>5</td><td>Best Practices and Troubleshooting</td></tr>
+                        </table>
+                        <div class="success">
+                            <p><strong>🎓 Level:</strong> Introductory. No prior AWS experience is assumed — only general familiarity with IT concepts (servers, storage, networks).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agenda -->
+            <section>
+                <h2><span class="emoji">📋</span> Course Flow — 70% Hands-On / 30% Theory</h2>
+                <div class="two-column" style="height:auto;">
+                    <div class="column">
+                        <table>
+                            <tr><th>Morning</th></tr>
+                            <tr><td>Welcome &amp; environment check</td></tr>
+                            <tr><td><strong>Module 1:</strong> Introduction to Cloud Computing</td></tr>
+                            <tr><td><strong>Module 2A:</strong> Security, Identity &amp; Compliance</td></tr>
+                            <tr><td>🔬 <strong>Lab 1:</strong> Configuring IAM Roles and Policies</td></tr>
+                            <tr><td><strong>Module 2B:</strong> Networking &amp; Content Delivery</td></tr>
+                            <tr><td>🔬 <strong>Lab 2:</strong> Security Groups and Network ACLs</td></tr>
+                            <tr><td>☕ Break</td></tr>
+                            <tr><td><strong>Module 2C:</strong> Compute — EC2</td></tr>
+                            <tr><td>🔬 <strong>Lab 3:</strong> Creating EC2 Instances</td></tr>
+                            <tr><td><strong>Module 2C:</strong> Deploying applications on EC2</td></tr>
+                            <tr><td>🔬 <strong>Lab 4:</strong> Deploying a Web Application on EC2</td></tr>
+                            <tr><td>🍽️ Lunch</td></tr>
+                        </table>
+                    </div>
+                    <div class="column">
+                        <table>
+                            <tr><th>Afternoon</th></tr>
+                            <tr><td><strong>Module 2D:</strong> Storage — S3 &amp; EBS</td></tr>
+                            <tr><td>🔬 <strong>Lab 5:</strong> Using S3 for Object Storage</td></tr>
+                            <tr><td><strong>Module 2C:</strong> Serverless — Lambda</td></tr>
+                            <tr><td>🔬 <strong>Lab 6:</strong> Serverless Functions with Lambda</td></tr>
+                            <tr><td><strong>Module 2E:</strong> Databases — RDS &amp; DynamoDB</td></tr>
+                            <tr><td>🔬 <strong>Lab 7A:</strong> Launch the RDS instance</td></tr>
+                            <tr><td>☕ Break (RDS provisions while you rest)</td></tr>
+                            <tr><td>🔬 <strong>Lab 7B:</strong> Connect to and explore RDS</td></tr>
+                            <tr><td><strong>Module 3:</strong> AWS Global Infrastructure</td></tr>
+                            <tr><td><strong>Module 4:</strong> Billing and Cost Optimization</td></tr>
+                            <tr><td>🔬 <strong>Lab 8:</strong> Cost Optimization Strategies &amp; cleanup</td></tr>
+                            <tr><td><strong>Module 5:</strong> Best Practices, Troubleshooting &amp; Exam Prep</td></tr>
+                            <tr><td>Wrap-up</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="highlight"><p><strong>Lab conventions:</strong> everyone shares one AWS account in <strong>us-east-2 (Ohio)</strong>. Prefix every resource you create with your assigned username, e.g. <code>user7-web-sg</code>. Labs build on each other — keep resources until Lab 8's cleanup.</p></div>
+            </section>
+            <!-- Module 1 divider -->
+            <section class="section-divider" data-background-color="#232f3e">
+                <h1><span class="emoji">☁️</span> Module 1</h1>
+                <p>Introduction to Cloud Computing</p>
+            </section>
+
+            <!-- What is cloud computing -->
+            <section>
+                <h2><span class="emoji">☁️</span> What Is Cloud Computing?</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>The on-demand delivery of IT resources over the internet with pay-as-you-go pricing.</strong></p>
+                        <ul>
+                            <li>Instead of buying and maintaining physical data centers and servers, you rent compute, storage, databases and more from a cloud vendor (AWS, Azure, Google Cloud …)</li>
+                            <li>Resources are provisioned in minutes via a web console, command line or API — and released just as fast</li>
+                            <li>Geographically distributed — deploy close to your users anywhere in the world</li>
+                        </ul>
+                        <h3>CapEx → OpEx</h3>
+                        <ul>
+                            <li><strong>Capital expense:</strong> large up-front hardware purchase you must forecast years ahead</li>
+                            <li><strong>Operational expense:</strong> variable monthly cost that tracks actual usage</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>NIST's five essential characteristics</h3>
+                        <ul>
+                            <li class="fragment"><strong>On-demand self-service</strong> — provision without human interaction with the provider</li>
+                            <li class="fragment"><strong>Broad network access</strong> — available over the network from standard clients</li>
+                            <li class="fragment"><strong>Resource pooling</strong> — multi-tenant model; physical resources are shared and isolated by virtualization</li>
+                            <li class="fragment"><strong>Rapid elasticity</strong> — scale out and in quickly, appearing unlimited</li>
+                            <li class="fragment"><strong>Measured service</strong> — usage is metered, monitored and billed</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> Know these five characteristics — questions often describe one and ask you to name it.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits -->
+            <section>
+                <h2><span class="emoji">💡</span> Benefits of Cloud Computing — The Six Advantages</h2>
+                <div class="pillar-grid">
+                    <div class="pillar fragment"><strong>1. Trade fixed expense for variable expense</strong>Pay only for what you consume instead of investing in data centers before you know how you'll use them.</div>
+                    <div class="pillar fragment"><strong>2. Benefit from massive economies of scale</strong>AWS aggregates usage from millions of customers and passes lower per-unit costs on.</div>
+                    <div class="pillar fragment"><strong>3. Stop guessing capacity</strong>Scale up or down in minutes — no more over-provisioning "just in case" or under-provisioning and losing customers.</div>
+                    <div class="pillar fragment"><strong>4. Increase speed and agility</strong>New resources are a click away; the cost of experimenting drops to nearly zero.</div>
+                    <div class="pillar fragment"><strong>5. Stop spending money running data centers</strong>Focus on your customers, not on racking, stacking and powering servers.</div>
+                    <div class="pillar fragment"><strong>6. Go global in minutes</strong>Deploy your application in multiple Regions around the world with a few clicks.</div>
+                </div>
+                <div class="two-column" style="height:auto; margin-top:8px;">
+                    <div class="column">
+                        <h3>Why AWS specifically?</h3>
+                        <ul>
+                            <li>Market leader with the broadest and deepest set of services (200+)</li>
+                            <li>Largest global footprint; mature security and compliance programs</li>
+                            <li>Everything is an API — automate all of it</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> The six advantages come straight from the AWS "Overview of Amazon Web Services" whitepaper and appear frequently in Domain 1 questions.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Types of cloud -->
+            <section>
+                <h2><span class="emoji">🏢</span> Types of Cloud Computing (Deployment Models)</h2>
+                <div class="service-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="service-card"><strong>Public cloud</strong>All resources run on a provider's shared infrastructure (AWS). Fastest to start, pay-as-you-go, provider handles the hardware.</div>
+                    <div class="service-card"><strong>Private cloud</strong>Cloud-style virtualization and self-service inside your own data center (VMware, OpenStack). You own capacity, patching and the CapEx.</div>
+                    <div class="service-card"><strong>Hybrid cloud</strong>On-premises connected to the public cloud — VPN or Direct Connect, Storage Gateway, AWS Outposts. Common during migrations and for data-residency constraints.</div>
+                    <div class="service-card"><strong>Multi-cloud</strong>Using two or more public clouds. Motivations: avoiding lock-in, best-of-breed services, acquisitions. Cost: more complexity and skills to maintain.</div>
+                </div>
+                <div class="two-column" style="height:auto; margin-top:8px;">
+                    <div class="column">
+                        <h3>Migration strategies you will hear about (the "6 Rs")</h3>
+                        <ul>
+                            <li><strong>Rehost</strong> (lift and shift) · <strong>Replatform</strong> (lift, tinker and shift) · <strong>Repurchase</strong> (move to SaaS)</li>
+                            <li><strong>Refactor</strong> (re-architect for cloud) · <strong>Retire</strong> · <strong>Retain</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="info"><p><strong>AWS hybrid tools:</strong> AWS Outposts (AWS racks in your building), Storage Gateway, Direct Connect, Site-to-Site VPN, Systems Manager for on-prem servers.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service models -->
+            <section>
+                <h2><span class="emoji">🧱</span> Key Concepts: IaaS, PaaS and SaaS</h2>
+                <table>
+                    <tr><th>Model</th><th>What you manage</th><th>What the provider manages</th><th>AWS examples</th></tr>
+                    <tr><td><strong>IaaS</strong><br>Infrastructure as a Service</td><td>OS, runtime, middleware, application, data</td><td>Virtualization, servers, storage, networking</td><td>Amazon EC2, Amazon VPC, Amazon EBS</td></tr>
+                    <tr><td><strong>PaaS</strong><br>Platform as a Service</td><td>Application and data</td><td>Everything below, including OS patching and the runtime</td><td>AWS Elastic Beanstalk, Amazon RDS, AWS Lambda</td></tr>
+                    <tr><td><strong>SaaS</strong><br>Software as a Service</td><td>Your usage and configuration</td><td>The complete product</td><td>Amazon WorkMail, Amazon Chime, third-party apps in AWS Marketplace</td></tr>
+                </table>
+                <div class="architecture-diagram">                On-premises        IaaS (EC2)         PaaS (RDS / Beanstalk)     SaaS
+  Application    you               you                you                        provider
+  Data           you               you                you                        provider
+  Runtime        you               you                provider                   provider
+  OS             you               you                provider                   provider
+  Virtualization you               provider           provider                   provider
+  Hardware       you               provider           provider                   provider
+  Networking     you               provider           provider                   provider</div>
+                <div class="info"><p><strong>Rule of thumb:</strong> the further right you move, the less you manage — and the less you can customize. <strong>Managed</strong> services (RDS, DynamoDB, Lambda) remove "undifferentiated heavy lifting"; <strong>unmanaged</strong> services (EC2) give you full control and full responsibility.</p></div>
+            </section>
+
+            <!-- Regions primer -->
+            <section>
+                <h2><span class="emoji">🗺️</span> Primer: Where Do Things Live in AWS?</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p>You will need these three terms for every lab today. Module 3 covers the global infrastructure in depth.</p>
+                        <ul>
+                            <li><strong>Region</strong> — a geographic area with its own independent set of AWS resources, e.g. <code>us-east-2</code> (Ohio). <em>Today's labs all run in us-east-2.</em></li>
+                            <li><strong>Availability Zone (AZ)</strong> — one or more isolated data centers inside a Region (<code>us-east-2a</code>, <code>2b</code>, <code>2c</code>). Spreading across AZs is how you survive a data-center failure.</li>
+                            <li><strong>Edge location</strong> — hundreds of small sites worldwide used by CloudFront and Route 53 to serve content close to users.</li>
+                        </ul>
+                        <div class="highlight"><p><strong>Scope matters:</strong> IAM and Route 53 are <em>global</em>. VPC, EC2, RDS and most others are <em>Regional</em> — pick the wrong Region in the console and your resources "disappear".</p></div>
+                    </div>
+                    <div class="column">
+                        <h3>Three ways to talk to AWS</h3>
+                        <ul>
+                            <li><strong>Management Console</strong> — web UI; best for learning and one-off tasks</li>
+                            <li><strong>AWS CLI</strong> — <code>aws s3 ls</code>; scriptable. <strong>CloudShell</strong> gives you a browser terminal with the CLI pre-installed</li>
+                            <li><strong>SDKs &amp; Infrastructure as Code</strong> — boto3, JavaScript, Java …; CloudFormation, CDK, Terraform</li>
+                        </ul>
+                        <div class="architecture-diagram">Console  --+
+CLI      --+--> HTTPS --> AWS API --> IAM authenticates
+SDK/IaC  --+                          and authorizes --> service acts</div>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> Console = password (+ MFA). CLI/SDK = access key ID + secret access key — or better, an IAM role.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Module 1 summary -->
+            <section>
+                <h2><span class="emoji">✅</span> Module 1 Summary</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li>Cloud computing = on-demand IT resources over the internet, pay-as-you-go, CapEx → OpEx</li>
+                            <li>NIST's five characteristics: on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service</li>
+                            <li>Six advantages of cloud computing</li>
+                            <li>Deployment models: public, private, hybrid, multi-cloud</li>
+                            <li>Service models: IaaS, PaaS, SaaS — managed vs unmanaged</li>
+                            <li>Regions, AZs, edge locations; console, CLI, SDK</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="success"><p><strong>Up next — Module 2A:</strong> before you touch any resource you need to understand who is allowed to do what. IAM first, then your first lab.</p></div>
+                    </div>
+                </div>
+            </section>
+            <!-- Module 2 divider -->
+            <section class="section-divider" data-background-color="#232f3e">
+                <h1><span class="emoji">🧰</span> Module 2</h1>
+                <p>Core AWS Services</p>
+                <p style="font-size:0.7em;">2A Security &amp; Identity · 2B Networking · 2C Compute · 2D Storage · 2E Databases</p>
+            </section>
+
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">🔐</span> Module 2A</h1>
+                <p>Security, Identity &amp; Compliance — IAM and KMS</p>
+            </section>
+
+            <!-- Shared responsibility -->
+            <section>
+                <h2><span class="emoji">🤝</span> The Shared Responsibility Model</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3><span class="emoji">🟧</span> AWS: security <em>OF</em> the cloud</h3>
+                        <ul>
+                            <li>Physical security of data centers, hardware and the global network</li>
+                            <li>Virtualization layer (hypervisor) and host operating systems</li>
+                            <li>The infrastructure under managed services (RDS, Lambda, S3 …)</li>
+                            <li>Compliance of the infrastructure (SOC, ISO 27001, PCI DSS, HIPAA eligibility …) — evidence in <strong>AWS Artifact</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3><span class="emoji">🟦</span> Customer: security <em>IN</em> the cloud</h3>
+                        <ul>
+                            <li>Your data — classification, encryption at rest and in transit</li>
+                            <li>IAM users, groups, roles, permissions and MFA</li>
+                            <li>Guest OS patching and firewall configuration on EC2</li>
+                            <li>Application code, security groups, network ACLs, VPC design</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight"><p><strong>Responsibility shifts with the service:</strong> on EC2 <em>you</em> patch the OS; on RDS <em>AWS</em> patches the engine but <em>you</em> control encryption, users and backup retention; on Lambda you own only your code and its permissions.</p></div>
+                <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Who patches the OS on an EC2 instance?" → customer. "Who disposes of failed disks?" → AWS. Encryption is a <em>shared</em> control: AWS provides the capability, you turn it on.</p></div>
+            </section>
+
+            <!-- IAM overview -->
+            <section>
+                <h2><span class="emoji">🪪</span> AWS Identity and Access Management (IAM)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>IAM controls <em>who</em> (authentication) can do <em>what</em> (authorization) on <em>which</em> resources.</strong></p>
+                        <ul>
+                            <li>Global service — not tied to a Region; free of charge</li>
+                            <li>Integrated with every AWS service; managed via console, CLI or SDK</li>
+                        </ul>
+                        <h3>The root user</h3>
+                        <ul>
+                            <li>Created with the account; signs in with the account email; <strong>unrestricted</strong> access that no policy can limit</li>
+                            <li>Use it only for tasks that require it (close the account, change support plan, some billing settings)</li>
+                            <li><strong>Enable MFA on root, lock the credentials away, create IAM identities for daily work</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <table>
+                            <tr><th>Entity</th><th>What it is</th></tr>
+                            <tr><td><strong>User</strong></td><td>A person or application with long-term credentials (password and/or access keys)</td></tr>
+                            <tr><td><strong>Group</strong></td><td>A collection of users; attach policies once for everyone. Not nestable; a user may be in several groups</td></tr>
+                            <tr><td><strong>Role</strong></td><td>An identity with <em>temporary</em> credentials that a trusted entity <em>assumes</em> — an EC2 instance, a Lambda function, a user in another account, a federated user</td></tr>
+                            <tr><td><strong>Policy</strong></td><td>A JSON document that allows or denies actions on resources; attached to users, groups or roles</td></tr>
+                        </table>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> An application on EC2 needs to read S3 → attach an <strong>IAM role</strong> to the instance. Never store access keys on the instance. (You create this role in Lab 1 and use it in Labs 3 and 5.)</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Policies -->
+            <section>
+                <h2><span class="emoji">📜</span> IAM Policies and Least Privilege</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [ "s3:ListBucket", "s3:GetObject" ],
+      "Resource": [
+        "arn:aws:s3:::user7-bucket-4821",
+        "arn:aws:s3:::user7-bucket-4821/*"
+      ]
+    }
+  ]
+}</code></pre>
+                        <ul>
+                            <li><strong>Effect</strong> — Allow or Deny · <strong>Action</strong> — the API calls (<code>service:Operation</code>)</li>
+                            <li><strong>Resource</strong> — the ARN(s) it applies to · <strong>Condition</strong> (optional) — e.g. require MFA, restrict source IP</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Evaluation rules</h3>
+                        <ul>
+                            <li class="fragment">Everything is <strong>implicitly denied</strong> by default</li>
+                            <li class="fragment">An <strong>explicit Allow</strong> grants access …</li>
+                            <li class="fragment">… but an <strong>explicit Deny always wins</strong></li>
+                        </ul>
+                        <h3>Policy types</h3>
+                        <ul>
+                            <li><strong>AWS managed</strong> — maintained by AWS (<code>AmazonS3ReadOnlyAccess</code>, <code>AdministratorAccess</code>)</li>
+                            <li><strong>Customer managed</strong> — you write and reuse across identities</li>
+                            <li><strong>Inline</strong> — embedded in one identity</li>
+                        </ul>
+                        <div class="success"><p><strong>Principle of least privilege:</strong> grant only what the job needs. Start narrow; widen when a real need appears.</p></div>
+                        <div class="info"><p><strong>ARN:</strong> <code>arn:aws:iam::123456789012:role/user7-ec2-role</code></p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Credentials, MFA, KMS -->
+            <section>
+                <h2><span class="emoji">🔑</span> Credentials, MFA and Key Management Service</h2>
+                <div class="three-column">
+                    <div class="column">
+                        <h3>Credentials</h3>
+                        <ul>
+                            <li><strong>Password</strong> → console (account ID or alias + user name)</li>
+                            <li><strong>Access key ID + secret</strong> → CLI, SDK, API</li>
+                            <li><strong>Temporary credentials</strong> (STS) → issued when a role is assumed; expire automatically</li>
+                            <li><strong>Password policy</strong> — length, complexity, expiry, reuse</li>
+                        </ul>
+                        <h3>Multi-Factor Authentication</h3>
+                        <ul>
+                            <li>Something you know + something you have</li>
+                            <li>Virtual (authenticator app), FIDO2 security key, hardware TOTP token</li>
+                            <li>Root first, then every human user</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Beyond IAM users</h3>
+                        <ul>
+                            <li><strong>IAM Identity Center</strong> — single sign-on across many accounts; federate Active Directory, Okta, Entra ID (SAML 2.0)</li>
+                            <li><strong>Amazon Cognito</strong> — sign-up / sign-in for <em>your application's</em> end users, including social logins</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝</strong> Workforce → Identity Center. App customers → Cognito. Machines → IAM roles.</p></div>
+                    </div>
+                    <div class="column">
+                        <h3>AWS Key Management Service (KMS)</h3>
+                        <ul>
+                            <li>Create, rotate, disable and audit encryption keys; keys are Regional and identified by ARN</li>
+                            <li>Integrated with S3, EBS, RDS, DynamoDB, Lambda, Secrets Manager and 100+ services — encryption at rest is a checkbox</li>
+                            <li>Every use of a key is logged in CloudTrail</li>
+                            <li><strong>AWS managed keys</strong> (free, per service) vs <strong>customer managed keys</strong> (you control policy and rotation)</li>
+                            <li><strong>AWS CloudHSM</strong> — dedicated, single-tenant hardware security modules when regulations require it</li>
+                        </ul>
+                        <div class="info"><p><strong>S3 encryption options:</strong> SSE-S3 (S3 keys), SSE-KMS (KMS keys), SSE-C (your keys). In transit: TLS via AWS Certificate Manager.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Other security services -->
+            <section>
+                <h2><span class="emoji">🛡️</span> The Wider AWS Security Toolbox</h2>
+                <div class="service-grid">
+                    <div class="service-card"><strong>AWS Shield</strong>DDoS protection. <em>Standard</em> free and always on; <em>Advanced</em> adds 24×7 response team and cost protection.</div>
+                    <div class="service-card"><strong>AWS WAF</strong>Web application firewall — blocks SQL injection, cross-site scripting and bad IPs at CloudFront, ALB or API Gateway.</div>
+                    <div class="service-card"><strong>Amazon GuardDuty</strong>Intelligent threat detection using CloudTrail, VPC Flow Logs and DNS logs.</div>
+                    <div class="service-card"><strong>Amazon Inspector</strong>Automated vulnerability scanning of EC2, container images and Lambda.</div>
+                    <div class="service-card"><strong>Amazon Macie</strong>Finds sensitive data (PII) in S3 with machine learning.</div>
+                    <div class="service-card"><strong>AWS Security Hub</strong>Aggregates findings from GuardDuty, Inspector, Macie and partners against standards like CIS.</div>
+                    <div class="service-card"><strong>AWS Secrets Manager</strong>Stores and rotates database passwords and API keys.</div>
+                    <div class="service-card"><strong>AWS Artifact</strong>On-demand compliance reports (SOC, PCI, ISO) and agreements (BAA).</div>
+                </div>
+                <div class="exam-tip"><p><strong>📝 Exam tip:</strong> match the keyword — "DDoS" → Shield · "SQL injection" → WAF · "compliance report" → Artifact · "PII in S3" → Macie · "threat detection" → GuardDuty · "vulnerabilities on EC2" → Inspector · "rotate DB password" → Secrets Manager.</p></div>
+                <div class="success"><p><strong>Up next — Lab 1:</strong> create a group and a user, sign in as that user to see least privilege, and create the EC2 role your web server will use later today.</p></div>
+            </section>
+
+            <!-- Lab 1 callout -->
+            <section class="lab-callout" data-background-color="#146eb4">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🪪</span> Lab 1: Configuring IAM Roles and Policies</h2>
+                    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ Sign in and set your Region to us-east-2</li>
+                            <li>✅ An IAM group with S3 read-only access, and a user in it</li>
+                            <li>✅ Sign in as that user and see least privilege in action</li>
+                            <li>✅ An IAM role for EC2 — used by your web server in Labs 3 and 5</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,153,0,0.25); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #ff9900;">
+                        <p style="font-size: 1.1em; margin: 10px 0 0 0;">Name everything <code>userN-…</code></p>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Lock It Down!</h2>
+                </div>
+            </section>
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">🕸️</span> Module 2B</h1>
+                <p>Networking &amp; Content Delivery — VPC, Security Groups &amp; NACLs, Route 53, CloudFront</p>
+            </section>
+
+            <!-- VPC concepts -->
+            <section>
+                <h2><span class="emoji">🏠</span> Amazon VPC: Your Private Network in AWS</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>A logically isolated virtual network where you launch EC2 instances, RDS databases and other resources.</strong></p>
+                        <ul>
+                            <li>Lives in one <strong>Region</strong> and spans all its AZs</li>
+                            <li>You choose a private IPv4 range in CIDR notation, e.g. <code>10.0.0.0/16</code> (65,536 addresses; /16 largest, /28 smallest); it cannot be changed later</li>
+                            <li>Every Region has a <strong>default VPC</strong> so you can launch instances immediately — real workloads get custom VPCs</li>
+                        </ul>
+                        <h3>Subnets</h3>
+                        <ul>
+                            <li>A slice of the VPC range that lives in <strong>exactly one AZ</strong> (e.g. <code>10.0.1.0/24</code>); AWS reserves 5 IPs per subnet</li>
+                            <li><strong>Public subnet</strong> — its route table sends <code>0.0.0.0/0</code> to an Internet Gateway</li>
+                            <li><strong>Private subnet</strong> — no internet route; reaches out through a NAT Gateway</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <table>
+                            <tr><th>Component</th><th>Purpose</th></tr>
+                            <tr><td><strong>Internet Gateway</strong></td><td>Two-way internet access for public subnets; one per VPC</td></tr>
+                            <tr><td><strong>Route table</strong></td><td>Destination → target rules for subnet traffic; the <em>local</em> route is always present</td></tr>
+                            <tr><td><strong>NAT Gateway</strong></td><td>Outbound-only internet for private subnets</td></tr>
+                            <tr><td><strong>Security group</strong></td><td>Instance-level firewall</td></tr>
+                            <tr><td><strong>Network ACL</strong></td><td>Subnet-level firewall</td></tr>
+                            <tr><td><strong>VPC Flow Logs</strong></td><td>Capture IP traffic metadata for troubleshooting and security</td></tr>
+                            <tr><td><strong>Elastic IP</strong></td><td>A static public IPv4 address you own and can re-assign</td></tr>
+                            <tr><td><strong>VPC endpoint</strong></td><td>Private path to S3, DynamoDB and other services — no IGW needed</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diagram -->
+            <section>
+                <h2><span class="emoji">🗺️</span> The Network You Will Build Today</h2>
+                <div class="architecture-diagram">+------------------------------ VPC  userN-vpc  10.0.0.0/16  (us-east-2) ------------------------------+
+|                                                                                                       |
+|  +-- Public subnet 1  10.0.0.0/20  (us-east-2a) --+    +-- Public subnet 2  10.0.16.0/20  (us-east-2b) --+  |
+|  |   Network ACL: default (+ Deny rule, Lab 2)    |    |   Network ACL: default                           |  |
+|  |                                                |    |                                                  |  |
+|  |   [ EC2 web server  (Lab 3 / 4) ]              |    |   [ EC2 web server #2  (Lab 4) ]                 |  |
+|  |     security group: userN-web-sg               |    |   [ RDS MySQL  (Lab 7) ]                         |  |
+|  |       in: 80, 22 from 0.0.0.0/0    out: all    |    |     security group: userN-db-sg                  |  |
+|  |                                                |    |       in: 3306 from userN-web-sg only            |  |
+|  +----------------------+-------------------------+    +-------------------------+------------------------+  |
+|                         |                                                        |                           |
+|              Route table (public):   10.0.0.0/16 -> local     0.0.0.0/0 -> igw   |                           |
+|                         +---------------------------+----------------------------+                           |
+|                                                     |                                                        |
+|                                          [ Internet Gateway ]                                                |
++-----------------------------------------------------+--------------------------------------------------------+
+                                                      |
+                                                  Internet  &lt;--  your browser
+
+   Also today:  S3 bucket (Lab 5) reached from EC2 via the IAM role (Lab 1)   |   Lambda function (Lab 6)</div>
+                <ul>
+                    <li>Two subnets in two AZs — the minimum for a highly available design and a requirement for RDS</li>
+                    <li>The route to <code>0.0.0.0/0</code> via the IGW is what makes a subnet "public"; the instance also needs a public IP</li>
+                    <li>The database security group trusts the <em>web security group</em>, not an IP address — a core AWS pattern</li>
+                </ul>
+            </section>
+
+            <!-- SG vs NACL -->
+            <section>
+                <h2><span class="emoji">🚧</span> Security Groups vs Network ACLs</h2>
+                <table>
+                    <tr><th></th><th>Security Group</th><th>Network ACL</th></tr>
+                    <tr><td><strong>Applies to</strong></td><td>Instance / network interface</td><td>Subnet (every instance in it)</td></tr>
+                    <tr><td><strong>Rules</strong></td><td>Allow only — anything not allowed is denied</td><td>Allow <em>and</em> Deny; numbered; evaluated lowest number first; <code>*</code> rule denies at the end</td></tr>
+                    <tr><td><strong>State</strong></td><td><strong>Stateful</strong> — return traffic is automatically allowed</td><td><strong>Stateless</strong> — you must allow inbound <em>and</em> outbound explicitly (ephemeral ports 1024–65535!)</td></tr>
+                    <tr><td><strong>Defaults</strong></td><td>Default SG: all outbound, inbound only from itself. New SG: no inbound</td><td>Default NACL: allow everything. New NACL: deny everything</td></tr>
+                    <tr><td><strong>Typical use</strong></td><td>"Web servers accept 80/443 from anywhere; DB accepts 3306 only from the web SG"</td><td>Block a malicious IP range for a whole subnet; coarse subnet-level guardrails</td></tr>
+                </table>
+                <div class="two-column" style="height:auto;">
+                    <div class="column">
+                        <h3>Security group rule anatomy</h3>
+                        <ul>
+                            <li><strong>Type / protocol</strong> — HTTP (TCP 80), SSH (TCP 22), MySQL (TCP 3306), All ICMP …</li>
+                            <li><strong>Source</strong> — a CIDR (<code>0.0.0.0/0</code> = anywhere, <code>203.0.113.5/32</code> = one host) or <em>another security group ID</em></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Stateful", "instance level" → security group. "Stateless", "subnet level", "deny rule" → network ACL. Both are <em>your</em> responsibility.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Route 53 & CloudFront & connectivity -->
+            <section>
+                <h2><span class="emoji">🌐</span> Route 53, CloudFront and Hybrid Connectivity</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3><span class="emoji">📡</span> Amazon Route 53 — DNS</h3>
+                        <ul>
+                            <li>Highly available, scalable DNS with a <strong>100% availability SLA</strong>; also registers domains</li>
+                            <li><strong>Hosted zones</strong> (public or private) hold records: A, AAAA, CNAME, MX, TXT, <em>Alias</em> (points at ELB, CloudFront, S3)</li>
+                            <li><strong>Routing policies:</strong> simple · weighted (blue/green) · latency-based · failover (with health checks) · geolocation · geoproximity · multi-value</li>
+                        </ul>
+                        <h3><span class="emoji">⚡</span> Amazon CloudFront — CDN</h3>
+                        <ul>
+                            <li>Caches content at 600+ edge locations; origin can be S3, ELB, EC2 or any HTTP server</li>
+                            <li>Lower latency, lower origin load, lower data-transfer cost; HTTPS at the edge with free ACM certificates</li>
+                            <li>Integrates with Shield and WAF for edge protection; signed URLs for private content</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3><span class="emoji">🔗</span> Connecting networks</h3>
+                        <table>
+                            <tr><th>Service</th><th>Use when</th></tr>
+                            <tr><td><strong>VPC Peering</strong></td><td>Two VPCs need private routing (not transitive)</td></tr>
+                            <tr><td><strong>Transit Gateway</strong></td><td>Many VPCs and sites — hub-and-spoke</td></tr>
+                            <tr><td><strong>Site-to-Site VPN</strong></td><td>Encrypted tunnel to on-premises over the internet; minutes to set up</td></tr>
+                            <tr><td><strong>Direct Connect</strong></td><td>Dedicated private fiber — consistent bandwidth and latency; weeks to provision</td></tr>
+                            <tr><td><strong>VPC Endpoints</strong></td><td>Reach S3/DynamoDB/other services without an IGW (PrivateLink)</td></tr>
+                            <tr><td><strong>Global Accelerator</strong></td><td>Static anycast IPs routing users over the AWS backbone (Module 3)</td></tr>
+                        </table>
+                        <div class="exam-tip"><p><strong>📝</strong> "Private, dedicated, consistent" → Direct Connect. "Quick, encrypted, over the internet" → VPN. "Cache static content near users" → CloudFront. "DNS failover" → Route 53 health checks.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 2:</strong> build the VPC in the diagram, create the web and database security groups, and add a Deny rule to the network ACL.</p></div>
+            </section>
+
+            <!-- Lab 2 callout -->
+            <section class="lab-callout" data-background-color="#ff9900">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🚧</span> Lab 2: Configuring Security Groups and Network ACLs</h2>
+                    <div style="background: rgba(0,0,0,0.25); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ A VPC (10.0.0.0/16) with two public subnets in two AZs, an Internet Gateway and route table</li>
+                            <li>✅ <code>userN-web-sg</code> — HTTP and SSH from the internet</li>
+                            <li>✅ <code>userN-db-sg</code> — MySQL only from the web security group</li>
+                            <li>✅ A Deny rule on the network ACL — something a security group cannot do</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(35,47,62,0.35); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #232f3e;">
+                        <p style="font-size: 1.1em; margin: 10px 0 0 0;">Break follows • Labs 3–7 all run inside this VPC</p>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Build the Network!</h2>
+                </div>
+            </section>
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">🖥️</span> Module 2C</h1>
+                <p>Compute — Amazon EC2</p>
+            </section>
+
+            <!-- EC2 overview -->
+            <section>
+                <h2><span class="emoji">🖥️</span> Amazon Elastic Compute Cloud (EC2)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Resizable virtual servers in the cloud — the IaaS workhorse of AWS.</strong> Launch in minutes, pay per second, stop or terminate any time.</p>
+                        <h3>What you choose at launch</h3>
+                        <ul>
+                            <li><strong>AMI</strong> (Amazon Machine Image) — the OS and pre-installed software template: Amazon Linux 2023, Ubuntu, Windows Server, Marketplace images, or your own custom AMIs</li>
+                            <li><strong>Instance type</strong> — the CPU / memory / storage / network profile</li>
+                            <li><strong>Key pair</strong> — public/private key for SSH (Linux) or password decryption (Windows); AWS keeps the public half, you download the <code>.pem</code> <em>once</em></li>
+                            <li><strong>Network</strong> — VPC, subnet, public IP, security group(s)</li>
+                            <li><strong>Storage</strong> — root EBS volume size/type, extra volumes</li>
+                            <li><strong>IAM role</strong> (instance profile), <strong>user data</strong> script, <strong>tags</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Instance type families</h3>
+                        <table>
+                            <tr><th>Family</th><th>Optimized for</th><th>Examples</th></tr>
+                            <tr><td><strong>General purpose</strong></td><td>Balanced; web servers, dev/test</td><td>t3, t4g (burstable), m6i, m7g</td></tr>
+                            <tr><td><strong>Compute optimized</strong></td><td>High CPU; batch, gaming, HPC</td><td>c6i, c7g</td></tr>
+                            <tr><td><strong>Memory optimized</strong></td><td>Large in-memory datasets; SAP, caches</td><td>r6i, x2, u-</td></tr>
+                            <tr><td><strong>Storage optimized</strong></td><td>High local disk IOPS; NoSQL, data warehouses</td><td>i4i, d3</td></tr>
+                            <tr><td><strong>Accelerated</strong></td><td>GPUs / ML chips</td><td>p5, g5, inf2, trn1</td></tr>
+                        </table>
+                        <p style="font-size:0.6em;">Naming: <code>t3.micro</code> = family <em>t</em>, generation <em>3</em>, size <em>micro</em>. Graviton (ARM) types end in <em>g</em> and cost ~20% less.</p>
+                        <div class="info"><p><strong>Instance lifecycle:</strong> pending → running → stopping → stopped → (start again) … → terminated. Stopping keeps the EBS root volume; terminating deletes it by default. Public IPs change on stop/start unless you use an Elastic IP.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EC2 storage & connectivity -->
+            <section>
+                <h2><span class="emoji">🔌</span> Connecting To and Securing an Instance</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Ways in</h3>
+                        <ul>
+                            <li><strong>EC2 Instance Connect</strong> — browser-based SSH from the console; no key file to manage (Lab 3)</li>
+                            <li><strong>SSH with your key pair</strong> — <code>ssh -i userN-key.pem ec2-user@&lt;public-ip&gt;</code></li>
+                            <li><strong>Session Manager</strong> (Systems Manager) — no open port 22 at all; audited sessions; the production best practice</li>
+                            <li><strong>RDP</strong> — Windows instances, port 3389</li>
+                        </ul>
+                        <h3>Root vs instance store</h3>
+                        <ul>
+                            <li><strong>EBS-backed</strong> (the norm) — persistent network volume; survives stop/start; snapshots to S3</li>
+                            <li><strong>Instance store</strong> — physically attached, very fast, <em>ephemeral</em> — data is lost on stop or termination</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Security checklist for a web server</h3>
+                        <ul>
+                            <li class="fragment">Security group: only the ports you serve (80/443); SSH restricted to your IP or removed in favor of Session Manager</li>
+                            <li class="fragment">IAM role instead of access keys on the box</li>
+                            <li class="fragment">Patch the OS — it is <em>your</em> side of the Shared Responsibility Model (Systems Manager Patch Manager helps)</li>
+                            <li class="fragment">Encrypt EBS volumes (KMS) — one checkbox, no performance penalty</li>
+                            <li class="fragment">Tags: <code>Name</code>, <code>Owner</code>, <code>Environment</code>, <code>CostCenter</code> — used for cost allocation and IAM conditions</li>
+                            <li class="fragment">Use IMDSv2 (token-based instance metadata) — the default on Amazon Linux 2023</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Data lost when instance stops" → instance store. "Connect with no inbound ports open" → Session Manager. "Static public IP that survives stop/start" → Elastic IP.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 3:</strong> create a key pair, launch an Amazon Linux 2023 instance into your VPC with your security group and IAM role, and connect to it from the browser.</p></div>
+            </section>
+
+            <!-- Lab 3 callout -->
+            <section class="lab-callout" data-background-color="#232f3e">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🖥️</span> Lab 3: Creating EC2 Instances</h2>
+                    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ A key pair <code>userN-key</code></li>
+                            <li>✅ A t3.micro Amazon Linux 2023 instance in your VPC with <code>userN-web-sg</code> and <code>userN-ec2-role</code></li>
+                            <li>✅ Connect from the browser with EC2 Instance Connect</li>
+                            <li>✅ Prove the instance uses its IAM role — <code>aws s3 ls</code> with no access keys</li>
+                        </ul>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Launch!</h2>
+                </div>
+            </section>
+
+            <!-- Deploying apps on EC2 -->
+            <section>
+                <h2><span class="emoji">🚀</span> Deploying Applications on EC2</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Three ways to get software onto an instance</h3>
+                        <ul>
+                            <li class="fragment"><strong>Manually</strong> — SSH in, install packages, copy files. Fine for learning; does not scale and drifts over time</li>
+                            <li class="fragment"><strong>User data</strong> — a shell script that runs <em>once</em> at first boot. Installs and configures automatically; the same script gives you identical servers every time</li>
+                            <li class="fragment"><strong>Custom AMI</strong> — bake the configured instance into an image, then launch copies in seconds. Combine with user data for the last-mile config</li>
+                        </ul>
+                        <pre><code class="language-bash">#!/bin/bash
+dnf install -y httpd
+systemctl enable --now httpd
+echo "&lt;h1&gt;Hello from $(hostname -f)&lt;/h1&gt;" \
+  &gt; /var/www/html/index.html</code></pre>
+                    </div>
+                    <div class="column">
+                        <h3>From one server to a fleet</h3>
+                        <ul>
+                            <li><strong>Elastic Load Balancing</strong> — distributes traffic across instances in multiple AZs and health-checks them. <em>Application</em> LB (HTTP/HTTPS, path routing) · <em>Network</em> LB (TCP/UDP, ultra-low latency, static IP) · <em>Gateway</em> LB (third-party appliances)</li>
+                            <li><strong>Auto Scaling group</strong> — launches from a <em>launch template</em> (AMI + type + user data), keeps the desired count healthy, scales on CloudWatch metrics (Module 4)</li>
+                            <li><strong>AWS Elastic Beanstalk</strong> — upload code; it provisions EC2, ELB, Auto Scaling and monitoring for you (PaaS)</li>
+                            <li><strong>Containers</strong> — Amazon ECS / EKS, with Fargate to run them serverless</li>
+                            <li><strong>AWS CodeDeploy / CodePipeline</strong> — automated CI/CD onto EC2, Lambda or ECS</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Just deploy my code, manage the infrastructure for me" → Elastic Beanstalk. "Layer 7 path-based routing" → ALB. "Run containers without managing servers" → Fargate.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 4:</strong> deploy a web page by hand on your instance, bake it into an AMI, then launch a second server from that AMI with user data.</p></div>
+            </section>
+
+            <!-- Lab 4 callout -->
+            <section class="lab-callout" data-background-color="#146eb4">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🚀</span> Lab 4: Deploying a Web Application on EC2</h2>
+                    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ Install Apache and deploy a page on <code>userN-web-1</code> by hand</li>
+                            <li>✅ Create a custom AMI from the configured server</li>
+                            <li>✅ Launch <code>userN-web-2</code> from the AMI in the other AZ with a user-data script — zero manual steps</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,153,0,0.25); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #ff9900;">
+                        <p style="font-size: 1.1em; margin: 10px 0 0 0;">Lunch follows</p>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Ship It!</h2>
+                </div>
+            </section>
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">🗄️</span> Module 2D</h1>
+                <p>Storage — Amazon S3 and Amazon EBS</p>
+            </section>
+
+            <!-- S3 -->
+            <section>
+                <h2><span class="emoji">🪣</span> Amazon Simple Storage Service (S3)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Durable, virtually unlimited <em>object</em> storage accessed over HTTPS.</strong> Not a file system — you PUT and GET whole objects.</p>
+                        <ul>
+                            <li><strong>Bucket</strong> — a container with a <em>globally unique</em> name, created in one Region (data never leaves it unless you copy it)</li>
+                            <li><strong>Object</strong> — data (0 bytes – 5 TB) + metadata, identified by a <strong>key</strong> such as <code>images/2026/logo.png</code> (folders are a display convention)</li>
+                            <li><strong>11 nines durability</strong> (99.999999999%) — replicated across ≥ 3 AZs automatically</li>
+                            <li><strong>Strong read-after-write consistency</strong> for all operations</li>
+                            <li>Pay for storage used, requests, and data transfer <em>out</em>; unlimited scale</li>
+                        </ul>
+                        <h3>Common uses</h3>
+                        <ul>
+                            <li>Backup and archive · data lakes · static website hosting · media storage · log storage · software distribution · disaster recovery</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Features you will use in Lab 5</h3>
+                        <ul>
+                            <li><strong>Versioning</strong> — keep every version; recover from overwrites and deletes. Once enabled it can only be suspended</li>
+                            <li><strong>Static website hosting</strong> — serve HTML/CSS/JS directly from the bucket</li>
+                            <li><strong>Block Public Access</strong> — on by default; you must deliberately turn it off <em>and</em> add a bucket policy to publish</li>
+                            <li><strong>Bucket policies</strong> (resource-based JSON) · <strong>IAM policies</strong> · ACLs (legacy) · <strong>presigned URLs</strong> (time-limited links)</li>
+                            <li><strong>Lifecycle rules</strong> — transition objects to cheaper classes or expire them after N days</li>
+                            <li><strong>Encryption at rest</strong> — SSE-S3 is on by default; SSE-KMS for your own keys</li>
+                            <li><strong>Event notifications</strong> → Lambda, SQS, SNS</li>
+                            <li><strong>Replication</strong> — same-Region or cross-Region copies</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝</strong> Buckets are Regional; names are global. "Recover an accidentally deleted object" → versioning. "Share a private object for 1 hour" → presigned URL.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Storage classes -->
+            <section>
+                <h2><span class="emoji">🧊</span> S3 Storage Classes — Pay for the Access Pattern You Have</h2>
+                <table>
+                    <tr><th>Class</th><th>Designed for</th><th>Retrieval</th><th>Relative cost</th></tr>
+                    <tr><td><strong>S3 Standard</strong></td><td>Frequently accessed data</td><td>Milliseconds</td><td>$$$</td></tr>
+                    <tr><td><strong>S3 Intelligent-Tiering</strong></td><td>Unknown or changing access patterns — moves objects between tiers automatically</td><td>Milliseconds</td><td>$$ + small monitoring fee</td></tr>
+                    <tr><td><strong>S3 Standard-IA</strong></td><td>Infrequent access, rapid when needed (backups); multi-AZ</td><td>Milliseconds; per-GB retrieval fee</td><td>$$</td></tr>
+                    <tr><td><strong>S3 One Zone-IA</strong></td><td>Re-creatable infrequent data; single AZ</td><td>Milliseconds</td><td>$</td></tr>
+                    <tr><td><strong>S3 Glacier Instant Retrieval</strong></td><td>Archive accessed ~once a quarter</td><td>Milliseconds</td><td>$</td></tr>
+                    <tr><td><strong>S3 Glacier Flexible Retrieval</strong></td><td>Archive accessed 1–2× a year</td><td>Minutes to hours</td><td>¢</td></tr>
+                    <tr><td><strong>S3 Glacier Deep Archive</strong></td><td>Compliance archives kept 7–10 years</td><td>12 – 48 hours</td><td>¢ (lowest)</td></tr>
+                </table>
+                <div class="two-column" style="height:auto;">
+                    <div class="column">
+                        <h3>Other storage services</h3>
+                        <ul>
+                            <li><strong>Amazon EFS</strong> — shared NFS file system for many Linux instances; grows automatically</li>
+                            <li><strong>Amazon FSx</strong> — managed Windows File Server (SMB) and Lustre (HPC)</li>
+                            <li><strong>AWS Storage Gateway</strong> — hybrid: on-prem file / volume / tape gateway backed by S3</li>
+                            <li><strong>AWS Snow Family</strong> — physical devices to move petabytes when the network is too slow</li>
+                            <li><strong>AWS Backup</strong> — central backup policies across EBS, RDS, DynamoDB, EFS …</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Lowest cost, retrieval in hours is fine" → Glacier Deep Archive. "Unpredictable access" → Intelligent-Tiering. "Shared file system for many EC2 instances" → EFS. "Windows file shares" → FSx for Windows. "Move 80 TB with a slow link" → Snowball Edge.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EBS -->
+            <section>
+                <h2><span class="emoji">💾</span> Amazon Elastic Block Store (EBS)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Persistent block storage volumes for EC2 — the instance sees a hard drive.</strong> You saw one in Lab 3 as the root volume.</p>
+                        <ul>
+                            <li>Lives in <strong>one AZ</strong>; attach to an instance in the same AZ (one volume ↔ one instance, except io2 Multi-Attach)</li>
+                            <li>Persists independently of the instance — survives stop/start; detach and re-attach elsewhere</li>
+                            <li>Automatically replicated within its AZ</li>
+                            <li>Resize or change type <em>while in use</em></li>
+                            <li>Billed for provisioned GB-month even when the instance is stopped — delete unused volumes (Lab 8)</li>
+                        </ul>
+                        <h3>Snapshots</h3>
+                        <ul>
+                            <li>Point-in-time, incremental backups stored in S3</li>
+                            <li>Copy across AZs and Regions; create volumes or AMIs from them (Lab 4's AMI is an EBS snapshot + metadata)</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <table>
+                            <tr><th>Volume type</th><th>Use case</th></tr>
+                            <tr><td><strong>gp3</strong> (general purpose SSD)</td><td>Default for boot volumes, dev/test, most workloads — 3,000 IOPS baseline, tune IOPS and throughput independently</td></tr>
+                            <tr><td><strong>io2</strong> (provisioned IOPS SSD)</td><td>Critical databases needing sustained high IOPS and 99.999% durability</td></tr>
+                            <tr><td><strong>st1</strong> (throughput HDD)</td><td>Big sequential workloads — logs, big data, data warehouses</td></tr>
+                            <tr><td><strong>sc1</strong> (cold HDD)</td><td>Infrequently accessed data at the lowest cost</td></tr>
+                        </table>
+                        <h3>EBS vs S3 vs EFS vs instance store</h3>
+                        <table>
+                            <tr><th></th><th>Type</th><th>Attached to</th></tr>
+                            <tr><td>EBS</td><td>Block</td><td>One instance, one AZ</td></tr>
+                            <tr><td>Instance store</td><td>Block (ephemeral)</td><td>The host; gone on stop</td></tr>
+                            <tr><td>EFS</td><td>File (NFS)</td><td>Many instances, many AZs</td></tr>
+                            <tr><td>S3</td><td>Object</td><td>Anything over HTTPS</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 5:</strong> create a versioned bucket, host a static website from it, and read it from your EC2 instance through the IAM role.</p></div>
+            </section>
+
+            <!-- Lab 5 callout -->
+            <section class="lab-callout" data-background-color="#ff9900">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🪣</span> Lab 5: Using S3 for Object Storage</h2>
+                    <div style="background: rgba(0,0,0,0.25); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ A versioned bucket — upload, overwrite, and see the old version survive</li>
+                            <li>✅ A static website with a bucket policy (Block Public Access deliberately relaxed)</li>
+                            <li>✅ Read the bucket from your EC2 instance via the IAM role — and watch a write get denied</li>
+                        </ul>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Store Everything!</h2>
+                </div>
+            </section>
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">⚡</span> Module 2C (continued)</h1>
+                <p>Serverless Compute — AWS Lambda</p>
+            </section>
+
+            <!-- Lambda -->
+            <section>
+                <h2><span class="emoji">⚡</span> AWS Lambda: Run Code Without Servers</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Upload a function; AWS runs it in response to events and bills you per millisecond of execution. No instances to size, patch or scale.</strong></p>
+                        <ul>
+                            <li>Languages: Python, Node.js, Java, .NET, Go, Ruby, custom runtimes, container images</li>
+                            <li>Scales automatically from zero to thousands of concurrent executions</li>
+                            <li>Max 15 minutes per invocation; memory 128 MB – 10 GB (CPU scales with memory)</li>
+                            <li>Permissions come from an <strong>execution role</strong> (IAM role Lambda assumes) — least privilege again</li>
+                            <li>Logs and metrics land in CloudWatch automatically</li>
+                            <li>Free tier: 1 million requests and 400,000 GB-seconds <em>per month, forever</em></li>
+                        </ul>
+                        <pre><code class="language-python">def lambda_handler(event, context):
+    name = event.get("name", "World")
+    return {"statusCode": 200,
+            "body": f"Hello, {name}!"}</code></pre>
+                    </div>
+                    <div class="column">
+                        <h3>Common triggers</h3>
+                        <ul>
+                            <li><strong>S3</strong> — object created → resize image, scan file</li>
+                            <li><strong>API Gateway / Function URL</strong> — HTTP request → serverless API</li>
+                            <li><strong>EventBridge</strong> — schedule (cron) or AWS events → nightly cleanup, react to instance state change</li>
+                            <li><strong>SQS / SNS / DynamoDB Streams / Kinesis</strong> — process messages and records</li>
+                        </ul>
+                        <div class="architecture-diagram">user      --> API Gateway   --> Lambda --> DynamoDB
+upload    --> S3 event      --> Lambda --> S3 (thumbnail)
+schedule  --> EventBridge   --> Lambda --> stop idle EC2</div>
+                        <h3>The serverless family</h3>
+                        <ul>
+                            <li><strong>AWS Fargate</strong> — serverless containers for ECS/EKS</li>
+                            <li><strong>Amazon API Gateway</strong> — managed REST/HTTP/WebSocket APIs</li>
+                            <li><strong>Amazon SQS / SNS / EventBridge / Step Functions</strong> — decoupling and orchestration</li>
+                            <li><strong>Amazon DynamoDB, Aurora Serverless</strong> — serverless data stores</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Run code only when triggered, pay only for execution time, no server management" → Lambda. "Longer than 15 minutes" → EC2, ECS/Fargate or AWS Batch.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 6:</strong> write and test a Python function, read its logs in CloudWatch, and give it a public Function URL.</p></div>
+            </section>
+
+            <!-- Lab 6 callout -->
+            <section class="lab-callout" data-background-color="#232f3e">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">⚡</span> Lab 6: Implementing Serverless Functions with Lambda</h2>
+                    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ A Python Lambda function</li>
+                            <li>✅ Test it and read the duration, memory and logs in CloudWatch</li>
+                            <li>✅ A public Function URL — an HTTPS endpoint with no server, security group or VPC</li>
+                        </ul>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Go Serverless!</h2>
+                </div>
+            </section>
+            <section class="section-divider" data-background-color="#146eb4">
+                <h1><span class="emoji">🗃️</span> Module 2E</h1>
+                <p>Databases — Amazon RDS and Amazon DynamoDB</p>
+            </section>
+
+            <!-- RDS -->
+            <section>
+                <h2><span class="emoji">🗃️</span> Amazon Relational Database Service (RDS)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Managed relational databases: AWS handles provisioning, patching, backups, replication and failover — you handle schema, queries and users.</strong></p>
+                        <ul>
+                            <li>Engines: <strong>MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, Db2</strong> and <strong>Amazon Aurora</strong></li>
+                            <li>Runs on a DB instance class (e.g. <code>db.t3.micro</code>) inside your VPC — reached via a DNS endpoint, protected by a security group</li>
+                            <li>Automated backups (1–35 day retention, point-in-time restore) and manual snapshots</li>
+                            <li><strong>Multi-AZ</strong> — synchronous standby in another AZ; automatic failover for <em>availability</em></li>
+                            <li><strong>Read replicas</strong> — asynchronous copies (same or cross-Region) for <em>read scaling</em></li>
+                            <li>Encryption at rest with KMS; TLS in transit; IAM database authentication</li>
+                            <li>Scale compute by changing the class; storage autoscaling</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Amazon Aurora</h3>
+                        <ul>
+                            <li>AWS-built, MySQL- and PostgreSQL-compatible; up to 5× / 3× the throughput</li>
+                            <li>Storage auto-grows to 128 TB, replicated 6 ways across 3 AZs, continuous backup to S3</li>
+                            <li>Up to 15 read replicas; <strong>Aurora Serverless</strong> scales capacity automatically</li>
+                        </ul>
+                        <h3>Other database services</h3>
+                        <ul>
+                            <li><strong>Amazon Redshift</strong> — petabyte data warehouse for analytics (OLAP)</li>
+                            <li><strong>Amazon ElastiCache</strong> — in-memory Redis / Memcached for sub-millisecond caching</li>
+                            <li><strong>Amazon DocumentDB</strong> (MongoDB-compatible) · <strong>Neptune</strong> (graph) · <strong>Timestream</strong> · <strong>QLDB</strong></li>
+                            <li><strong>AWS Database Migration Service</strong> — migrate on-prem databases with minimal downtime (homogeneous or with Schema Conversion Tool)</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Improve availability" → Multi-AZ. "Offload read traffic" → read replica. "Data warehouse / BI queries" → Redshift. "Cache to reduce DB load" → ElastiCache.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DynamoDB -->
+            <section>
+                <h2><span class="emoji">⚡</span> Amazon DynamoDB — Serverless NoSQL</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>Fully managed key-value and document database with single-digit-millisecond latency at any scale.</strong> No servers, no patching, no capacity planning (on-demand mode).</p>
+                        <ul>
+                            <li><strong>Table → items → attributes</strong>; schemaless except the primary key</li>
+                            <li><strong>Partition key</strong> (required) spreads data across storage; optional <strong>sort key</strong> orders items within a partition — e.g. <code>Artist</code> + <code>SongTitle</code></li>
+                            <li>Secondary indexes for other query patterns</li>
+                            <li>Capacity: <strong>on-demand</strong> (pay per request) or <strong>provisioned</strong> (RCUs/WCUs with auto scaling)</li>
+                            <li>Eventually consistent reads by default; strongly consistent on request</li>
+                            <li>Replicated across 3 AZs; <strong>Global Tables</strong> for multi-Region active-active</li>
+                            <li>Streams, TTL, point-in-time recovery, DAX (in-memory cache), encryption at rest</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Relational vs NoSQL</h3>
+                        <table>
+                            <tr><th>Relational (RDS)</th><th>NoSQL (DynamoDB)</th></tr>
+                            <tr><td>Fixed schema, normalized tables, joins</td><td>Flexible schema, denormalized, no joins</td></tr>
+                            <tr><td>SQL; ACID transactions</td><td>API calls (PutItem, Query); transactions available</td></tr>
+                            <tr><td>Scales up (bigger instance) + read replicas</td><td>Scales out horizontally, automatically</td></tr>
+                            <tr><td>Complex queries and reporting</td><td>Known access patterns at massive scale — sessions, carts, IoT, gaming, profiles</td></tr>
+                        </table>
+                        <pre><code class="language-json">{ "Artist": "Nina Simone",
+  "SongTitle": "Feeling Good",
+  "Year": 1965,
+  "Tags": ["jazz", "soul"] }</code></pre>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Serverless NoSQL, millisecond latency, any scale" → DynamoDB. "Existing MySQL app, minimal changes" → RDS/Aurora.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 7:</strong> launch a MySQL RDS instance into your VPC (Part A — it provisions during the break), then connect from your EC2 instance, create a table, and find backups and Multi-AZ (Part B).</p></div>
+            </section>
+
+            <!-- Lab 7 callout -->
+            <section class="lab-callout" data-background-color="#ff9900">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">🗃️</span> Lab 7: Setting Up a Relational Database with RDS</h2>
+                    <div style="background: rgba(0,0,0,0.25); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Build:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ <strong>Part A (before the break):</strong> a DB subnet group and a MySQL db.t3.micro in <code>userN-vpc</code> with <code>userN-db-sg</code></li>
+                            <li>✅ <strong>Part B (after the break):</strong> connect from your EC2 instance — only the web security group can reach it</li>
+                            <li>✅ Create a table, then find backups, Multi-AZ and instance class in the console</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(35,47,62,0.35); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #232f3e;">
+                        <p style="font-size: 1.1em; margin: 10px 0 0 0;">Part A now • ☕ Break • Part B after the break</p>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Start the Database, Then Take a Break!</h2>
+                </div>
+            </section>
+            <!-- Module 3 divider -->
+            <section class="section-divider" data-background-color="#232f3e">
+                <h1><span class="emoji">🌍</span> Module 3</h1>
+                <p>AWS Global Infrastructure</p>
+            </section>
+
+            <!-- Regions and AZs -->
+            <section>
+                <h2><span class="emoji">🌍</span> Regions and Availability Zones</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Regions</h3>
+                        <ul>
+                            <li>A physical location containing multiple AZs: <code>us-east-1</code> N. Virginia, <code>us-east-2</code> Ohio, <code>eu-west-1</code> Ireland, <code>ap-southeast-1</code> Singapore …</li>
+                            <li>30+ Regions, fully independent — a failure or a maintenance event in one cannot affect another</li>
+                            <li>Data stays in the Region you choose unless <em>you</em> move it</li>
+                            <li>Not every service, instance type or feature is in every Region; prices differ</li>
+                            <li>Special Regions: AWS GovCloud (US), China (operated by local partners)</li>
+                        </ul>
+                        <h3>Choosing a Region</h3>
+                        <ul>
+                            <li class="fragment"><strong>Compliance</strong> — data residency and governance requirements</li>
+                            <li class="fragment"><strong>Proximity</strong> — latency to your users</li>
+                            <li class="fragment"><strong>Feature availability</strong> — new services land in a few Regions first</li>
+                            <li class="fragment"><strong>Pricing</strong> — the same instance costs different amounts in different Regions</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Availability Zones</h3>
+                        <ul>
+                            <li>One or more discrete data centers with redundant power, networking and cooling</li>
+                            <li>Every Region has <strong>at least 3 AZs</strong>; physically separated (miles apart, distinct flood plains and power grids) but joined by low-latency private fiber</li>
+                            <li>Designed so a fire, flood or power loss in one AZ does not affect the others</li>
+                            <li>Services like S3, DynamoDB and Lambda are Regional and use multiple AZs for you; EC2, EBS, subnets and RDS instances are <em>zonal</em> — <strong>you</strong> spread them across AZs</li>
+                        </ul>
+                        <div class="architecture-diagram">Region us-east-2
+ |- AZ us-east-2a  -  data center(s)  -  your subnet 1, web-1, RDS primary
+ |- AZ us-east-2b  -  data center(s)  -  your subnet 2, web-2, RDS standby
+ +- AZ us-east-2c  -  data center(s)</div>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> Multi-AZ = high availability within a Region. Multi-Region = disaster recovery and global latency. "AZ" letters map differently per account, so <code>us-east-2a</code> is not the same building for everyone.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Edge & Global Accelerator -->
+            <section>
+                <h2><span class="emoji">⚡</span> Edge Locations and AWS Global Accelerator</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Edge locations / Points of Presence</h3>
+                        <ul>
+                            <li><strong>600+ sites</strong> in hundreds of cities — far more than Regions, and much closer to users</li>
+                            <li>Home of <strong>Amazon CloudFront</strong> (content caching), <strong>Route 53</strong> (DNS resolution), <strong>AWS WAF / Shield</strong> (edge protection) and <strong>Lambda@Edge / CloudFront Functions</strong></li>
+                            <li>Regional edge caches sit between edge locations and your origin for less-popular content</li>
+                            <li>You do not launch servers in edge locations; they serve and protect traffic</li>
+                        </ul>
+                        <h3>Extending the Region</h3>
+                        <ul>
+                            <li><strong>AWS Local Zones</strong> — compute and storage in large metro areas (single-digit ms for gaming, media, AR/VR)</li>
+                            <li><strong>AWS Wavelength</strong> — inside telecom 5G networks</li>
+                            <li><strong>AWS Outposts</strong> — AWS racks and services in <em>your</em> data center</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>AWS Global Accelerator</h3>
+                        <ul>
+                            <li>Gives your application <strong>two static anycast IP addresses</strong> advertised from every edge location</li>
+                            <li>User traffic enters the AWS global backbone at the nearest edge, avoiding congested public internet paths</li>
+                            <li>Routes to the nearest <em>healthy</em> endpoint (ALB, NLB, EC2, Elastic IP) across Regions; instant failover</li>
+                            <li>Works for TCP and UDP, not just HTTP — gaming, VoIP, IoT</li>
+                        </ul>
+                        <table>
+                            <tr><th></th><th>CloudFront</th><th>Global Accelerator</th></tr>
+                            <tr><td>What it does</td><td>Caches <em>content</em> at the edge</td><td>Accelerates <em>connections</em> to your endpoints</td></tr>
+                            <tr><td>Best for</td><td>Static and streaming content, HTTP(S)</td><td>Dynamic apps, non-HTTP, static IP needs, multi-Region failover</td></tr>
+                            <tr><td>IPs</td><td>Changing edge IPs via DNS</td><td>2 fixed anycast IPs</td></tr>
+                        </table>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Static IP addresses for a global TCP/UDP application" → Global Accelerator. "Cache images and video near users" → CloudFront. Both use edge locations.</p></div>
+                    </div>
+                </div>
+            </section>
+            <!-- Module 4 divider -->
+            <section class="section-divider" data-background-color="#232f3e">
+                <h1><span class="emoji">💰</span> Module 4</h1>
+                <p>Billing and Cost Optimization</p>
+            </section>
+
+            <!-- Pricing models -->
+            <section>
+                <h2><span class="emoji">💵</span> Understanding AWS Pricing</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Three fundamental drivers</h3>
+                        <ul>
+                            <li><strong>Compute</strong> — per second/hour an instance runs, per ms a function executes</li>
+                            <li><strong>Storage</strong> — per GB-month stored (plus requests for S3)</li>
+                            <li><strong>Data transfer <em>out</em></strong> — per GB leaving AWS to the internet. Inbound is free; transfer between AZs and Regions is charged</li>
+                        </ul>
+                        <h3>Principles</h3>
+                        <ul>
+                            <li>Pay-as-you-go — no long-term contracts by default, no termination fees</li>
+                            <li>Pay less when you reserve, pay less by using more (tiered S3 pricing), pay less as AWS grows</li>
+                            <li><strong>Free Tier:</strong> <em>Always free</em> (1M Lambda requests/month, 25 GB DynamoDB), <em>free trials</em>, and a credit-based plan for accounts created after July 2025 (older accounts: 12-months-free, e.g. 750 h t2/t3.micro)</li>
+                        </ul>
+                        <div class="info"><p><strong>AWS Pricing Calculator</strong> (calculator.aws) — estimate a workload before you build; save and share estimates (Lab 8).</p></div>
+                    </div>
+                    <div class="column">
+                        <h3>EC2 purchasing options</h3>
+                        <table>
+                            <tr><th>Option</th><th>Commitment</th><th>Savings</th><th>Use for</th></tr>
+                            <tr><td><strong>On-Demand</strong></td><td>None; per second</td><td>—</td><td>Dev/test, unpredictable, short-term</td></tr>
+                            <tr><td><strong>Savings Plans</strong></td><td>$/hour for 1 or 3 years (Compute or EC2 Instance)</td><td>Up to 72%</td><td>Steady usage; flexible across types, Regions, Fargate, Lambda</td></tr>
+                            <tr><td><strong>Reserved Instances</strong></td><td>Specific type/Region, 1 or 3 years; no / partial / all upfront</td><td>Up to 72%</td><td>Steady, predictable workloads; also RDS, ElastiCache, Redshift</td></tr>
+                            <tr><td><strong>Spot Instances</strong></td><td>None — AWS can reclaim with 2-minute warning</td><td>Up to 90%</td><td>Fault-tolerant batch, CI, big data, rendering</td></tr>
+                            <tr><td><strong>Dedicated Hosts / Instances</strong></td><td>Physical server for you</td><td>—</td><td>Licensing (BYOL), compliance requiring single tenancy</td></tr>
+                            <tr><td><strong>Capacity Reservations</strong></td><td>Reserve capacity in an AZ, no discount</td><td>—</td><td>Guarantee capacity for an event</td></tr>
+                        </table>
+                        <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Cheapest for interruptible work" → Spot. "Steady 24×7 for 3 years, most flexible" → Compute Savings Plan. "Server-bound software licenses" → Dedicated Host.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cost tools -->
+            <section>
+                <h2><span class="emoji">📊</span> Billing and Cost Management Tools</h2>
+                <div class="service-grid">
+                    <div class="service-card"><strong>Billing &amp; Cost Management console</strong>Invoices, payment methods, Free Tier usage, credits, tax settings.</div>
+                    <div class="service-card"><strong>AWS Cost Explorer</strong>Visualize and analyze spend and usage over 13 months by service, account, tag or Region; forecast 12 months; RI/Savings Plan recommendations.</div>
+                    <div class="service-card"><strong>AWS Budgets</strong>Set cost, usage, RI or Savings Plan budgets; get alerts (email/SNS) at thresholds; optional automated actions.</div>
+                    <div class="service-card"><strong>AWS Cost Anomaly Detection</strong>ML flags unusual spend and notifies you.</div>
+                    <div class="service-card"><strong>Cost &amp; Usage Report (CUR)</strong>The most granular billing data, delivered to S3 for Athena/QuickSight analysis.</div>
+                    <div class="service-card"><strong>Cost allocation tags</strong>Activate tags like <code>CostCenter</code> / <code>Project</code> so Cost Explorer can slice spend by team.</div>
+                    <div class="service-card"><strong>AWS Organizations</strong>Manage many accounts; <strong>consolidated billing</strong> = one bill, shared volume discounts and reservations; Service Control Policies for guardrails.</div>
+                    <div class="service-card"><strong>AWS Control Tower</strong>Sets up a secure multi-account landing zone on top of Organizations.</div>
+                    <div class="service-card"><strong>AWS Trusted Advisor</strong>Checks for idle load balancers, under-utilized instances, unattached EBS volumes, RI opportunities (full checks need Business/Enterprise support).</div>
+                    <div class="service-card"><strong>AWS Compute Optimizer</strong>ML recommendations to rightsize EC2, ASG, EBS and Lambda based on 14+ days of metrics.</div>
+                    <div class="service-card"><strong>AWS Pricing Calculator</strong>Pre-deployment estimates.</div>
+                    <div class="service-card"><strong>Migration Evaluator / TCO</strong>Compare on-premises total cost of ownership with AWS.</div>
+                </div>
+                <div class="exam-tip"><p><strong>📝 Exam tip:</strong> "Alert me when forecast spend exceeds $X" → Budgets. "Which service cost the most last month?" → Cost Explorer. "One bill for 20 accounts" → Organizations consolidated billing. "Detailed line items in S3" → CUR.</p></div>
+            </section>
+
+            <!-- Cost optimization strategies -->
+            <section>
+                <h2><span class="emoji">✂️</span> Cost Optimization Strategies</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>1. Rightsize</h3>
+                        <ul>
+                            <li>Match instance type and size to actual CPU/memory/network utilization — most fleets are over-provisioned</li>
+                            <li>Use CloudWatch metrics, Compute Optimizer and Trusted Advisor; downsize in steps (t3.large → t3.medium) or change family (Graviton ~20% cheaper)</li>
+                            <li>Rightsize storage too: gp2 → gp3, delete unattached volumes and old snapshots, S3 lifecycle to cheaper classes</li>
+                        </ul>
+                        <h3>2. Commit for steady state</h3>
+                        <ul>
+                            <li>Cover the baseline with Savings Plans / Reserved Instances; keep the peaks On-Demand or Spot</li>
+                        </ul>
+                        <h3>3. Turn things off</h3>
+                        <ul>
+                            <li>Schedule dev/test instances to stop nights and weekends (Instance Scheduler, EventBridge + Lambda) — ~65% savings</li>
+                            <li>Delete idle load balancers, NAT gateways, Elastic IPs not attached (they cost money!), forgotten RDS instances</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>4. Auto Scaling — pay for demand, not for peak</h3>
+                        <ul>
+                            <li><strong>EC2 Auto Scaling group</strong>: launch template + min/desired/max + scaling policies; replaces unhealthy instances; spreads across AZs</li>
+                            <li><strong>Target tracking</strong> ("keep average CPU at 50%") · <strong>step / simple</strong> (CloudWatch alarm thresholds) · <strong>scheduled</strong> (known peaks) · <strong>predictive</strong> (ML forecast)</li>
+                            <li>Attach to a load balancer so new instances receive traffic automatically</li>
+                            <li>Same idea elsewhere: DynamoDB auto scaling, Aurora Serverless, Lambda (scales itself), Application Auto Scaling for ECS</li>
+                        </ul>
+                        <div class="architecture-diagram">CloudWatch CPU &gt; 70%  -->  alarm  -->  ASG adds an instance     -->  ALB routes traffic to it
+CloudWatch CPU &lt; 30%  -->  alarm  -->  ASG removes an instance
+                        min 1  ---  desired 2  ---  max 4</div>
+                        <h3>5. Use managed and serverless services</h3>
+                        <ul>
+                            <li>Lambda, Fargate, DynamoDB, S3 — no idle capacity to pay for; less operations time</li>
+                        </ul>
+                        <div class="exam-tip"><p><strong>📝</strong> "Handle variable traffic cost-effectively" → Auto Scaling + ELB. "Reduce cost of a consistently under-utilized instance" → rightsize.</p></div>
+                    </div>
+                </div>
+                <div class="success"><p><strong>Up next — Lab 8:</strong> compare On-Demand vs Savings Plan pricing, set a budget alert, rightsize an instance — then clean up everything you built today.</p></div>
+            </section>
+
+            <!-- Lab 8 callout -->
+            <section class="lab-callout" data-background-color="#146eb4">
+                <div style="text-align: center; color: white;">
+                    <h1><span class="emoji">🔬</span> Time for Hands-On Practice!</h1>
+                    <h2><span class="emoji">💰</span> Lab 8: Implementing Cost Optimization Strategies</h2>
+                    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h3>🎯 What You'll Do:</h3>
+                        <ul style="font-size: 1.1em; line-height: 1.6;">
+                            <li>✅ Price your web servers On-Demand vs Savings Plan in the Pricing Calculator</li>
+                            <li>✅ Create a Budget with an email alert</li>
+                            <li>✅ Rightsize <code>userN-web-2</code> to a smaller instance type</li>
+                            <li>✅ <strong>Clean up</strong> everything from Labs 1–7 so nothing is billed overnight</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,153,0,0.25); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #ff9900;">
+                        <p style="font-size: 1.1em; margin: 10px 0 0 0;">Cleanup checklist is at the end of the lab guide</p>
+                    </div>
+                    <h2 style="margin-top: 30px; font-size: 2em;">🚀 Spend Smart!</h2>
+                </div>
+            </section>
+            <!-- Module 5 divider -->
+            <section class="section-divider" data-background-color="#232f3e">
+                <h1><span class="emoji">🏛️</span> Module 5</h1>
+                <p>Best Practices and Troubleshooting</p>
+            </section>
+
+            <!-- Best practices -->
+            <section>
+                <h2><span class="emoji">🛠️</span> Building Secure and Reliable Applications on AWS</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3><span class="emoji">🔒</span> Security best practices</h3>
+                        <ul>
+                            <li class="fragment">MFA on root and every user; no root access keys; least-privilege IAM; roles for machines</li>
+                            <li class="fragment">Security groups scoped to exact ports and sources; SSH via Session Manager, not 0.0.0.0/0</li>
+                            <li class="fragment">Encrypt everything at rest (KMS) and in transit (TLS/ACM); keep S3 Block Public Access on unless you mean it</li>
+                            <li class="fragment">Secrets in Secrets Manager or Parameter Store — never in code or user data</li>
+                            <li class="fragment">Turn on CloudTrail (all Regions), GuardDuty, Config; review Trusted Advisor security checks and IAM Access Analyzer</li>
+                            <li class="fragment">Patch on a schedule (Systems Manager Patch Manager); tag every resource</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3><span class="emoji">🛡️</span> Reliability best practices</h3>
+                        <ul>
+                            <li class="fragment"><strong>Design for failure</strong> — assume any instance, AZ or dependency can fail; no single points of failure</li>
+                            <li class="fragment"><strong>Multi-AZ everything</strong> — subnets, Auto Scaling groups, ELB, RDS Multi-AZ; multi-Region for DR when the business needs it</li>
+                            <li class="fragment"><strong>Stateless servers</strong> — sessions in DynamoDB / ElastiCache, files in S3 / EFS, so instances are disposable</li>
+                            <li class="fragment"><strong>Decouple</strong> with SQS, SNS, EventBridge so a slow component does not take down the rest</li>
+                            <li class="fragment"><strong>Automate</strong> — infrastructure as code (CloudFormation / CDK), immutable AMIs, CI/CD; humans make typos at 2 a.m.</li>
+                            <li class="fragment"><strong>Monitor and alarm</strong> — CloudWatch metrics, logs and alarms; test backups and recovery (RTO / RPO) before you need them</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="architecture-diagram">Route 53 --> CloudFront + WAF --> ALB (2 AZs) --> Auto Scaling group (stateless web tier) --> RDS Multi-AZ / DynamoDB
+                                     |                                                  +--> ElastiCache
+                                     +--> S3 (static assets, logs)       CloudWatch + CloudTrail + GuardDuty watch it all</div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section>
+                <h2><span class="emoji">🔍</span> Common Troubleshooting Techniques</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>"I can't reach my instance / web page"</h3>
+                        <ol style="font-size:0.7em;">
+                            <li>Is it <strong>running</strong> and passing both status checks?</li>
+                            <li>Does it have a <strong>public IP</strong> (or Elastic IP)?</li>
+                            <li>Is the subnet's <strong>route table</strong> sending <code>0.0.0.0/0</code> to an IGW?</li>
+                            <li><strong>Security group</strong>: inbound rule for the port from your source?</li>
+                            <li><strong>Network ACL</strong>: inbound <em>and</em> outbound allowed, including ephemeral ports 1024–65535?</li>
+                            <li>Is the <strong>service listening</strong> on the instance (<code>systemctl status httpd</code>, OS firewall)?</li>
+                            <li>Read the <strong>system log</strong> / user-data output: <code>/var/log/cloud-init-output.log</code></li>
+                        </ol>
+                        <h3>"Access Denied"</h3>
+                        <ul>
+                            <li>Which identity am I? (<code>aws sts get-caller-identity</code>)</li>
+                            <li>Is there an explicit Deny anywhere (SCP, permissions boundary, bucket policy)? Deny always wins</li>
+                            <li>S3: Block Public Access, bucket policy <em>and</em> IAM policy must all agree</li>
+                            <li>Use the <strong>IAM Policy Simulator</strong> and <strong>CloudTrail</strong> (<code>errorCode: AccessDenied</code>)</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Your toolbox</h3>
+                        <table>
+                            <tr><th>Tool</th><th>Answers</th></tr>
+                            <tr><td><strong>Amazon CloudWatch</strong></td><td>Metrics (CPU, latency, errors), logs, alarms, dashboards — "what is the system doing?"</td></tr>
+                            <tr><td><strong>AWS CloudTrail</strong></td><td>Who called which API, when, from where — "who changed this?"</td></tr>
+                            <tr><td><strong>AWS Config</strong></td><td>Configuration history and compliance — "what did it look like yesterday?"</td></tr>
+                            <tr><td><strong>VPC Flow Logs</strong></td><td>Accepted / rejected traffic per interface — "is the packet being dropped?"</td></tr>
+                            <tr><td><strong>VPC Reachability Analyzer</strong></td><td>Path analysis between two resources — "why can't A reach B?"</td></tr>
+                            <tr><td><strong>AWS X-Ray</strong></td><td>Distributed tracing across services — "which call is slow?"</td></tr>
+                            <tr><td><strong>AWS Health Dashboard</strong></td><td>Is AWS itself having an issue affecting my account?</td></tr>
+                            <tr><td><strong>AWS Support &amp; re:Post</strong></td><td>Cases per your support plan; community Q&amp;A; AWS Trusted Advisor</td></tr>
+                        </table>
+                        <h3>Support plans</h3>
+                        <ul>
+                            <li><strong>Basic</strong> (free) · <strong>Developer</strong> (business hours email) · <strong>Business</strong> (24×7 phone/chat, full Trusted Advisor, 1-hour response for production down) · <strong>Enterprise On-Ramp</strong> · <strong>Enterprise</strong> (15-minute critical response, Technical Account Manager, Concierge)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Well-Architected -->
+            <section>
+                <h2><span class="emoji">🏛️</span> The AWS Well-Architected Framework</h2>
+                <p>Best practices and questions developed by AWS architects to evaluate workloads. It does not prescribe implementations — it helps you <strong>assess, improve and understand the business impact</strong> of design decisions. Run a review with the free <strong>AWS Well-Architected Tool</strong> in the console.</p>
+                <div class="pillar-grid">
+                    <div class="pillar"><strong>⚙️ Operational Excellence</strong>Operations as code, small reversible changes, refine procedures often, anticipate failure, learn from every event.</div>
+                    <div class="pillar"><strong>🔒 Security</strong>Strong identity foundation, traceability, security at all layers, least privilege, protect data in transit and at rest, automate, prepare for incidents.</div>
+                    <div class="pillar"><strong>🛡️ Reliability</strong>Recover automatically, test recovery, scale horizontally, stop guessing capacity, manage change through automation.</div>
+                    <div class="pillar"><strong>⚡ Performance Efficiency</strong>Democratize advanced technologies, go global in minutes, use serverless, experiment often, mechanical sympathy.</div>
+                    <div class="pillar"><strong>💰 Cost Optimization</strong>Practice cloud financial management, adopt a consumption model, measure efficiency, stop undifferentiated heavy lifting, attribute spend.</div>
+                    <div class="pillar"><strong>🌱 Sustainability</strong>Understand your impact, set targets, maximize utilization, adopt efficient hardware and managed services, reduce downstream impact.</div>
+                </div>
+                <div class="exam-tip"><p><strong>📝 Exam tip:</strong> Six pillars (Sustainability was added in 2021). Every lab today mapped to at least one: least privilege (Security), Multi-AZ subnets (Reliability), rightsizing (Cost Optimization), AMIs and user data (Operational Excellence).</p></div>
+            </section>
+
+            <!-- Exam prep -->
+            <section>
+                <h2><span class="emoji">🎓</span> Preparing for the AWS Certified Cloud Practitioner Exam (CLF-C02)</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Exam facts</h3>
+                        <ul>
+                            <li><strong>65 questions</strong> (50 scored + 15 unscored), <strong>90 minutes</strong>, passing score <strong>700 / 1000</strong>, USD 100</li>
+                            <li>Multiple choice (1 of 4) and multiple response (2+ of 5); no penalty for guessing — <strong>answer everything</strong></li>
+                            <li>Testing center or online proctored; valid 3 years</li>
+                            <li>Flag questions and come back; ~80 seconds per question</li>
+                        </ul>
+                        <h3>Domains</h3>
+                        <table>
+                            <tr><th>Domain</th><th>Weight</th></tr>
+                            <tr><td>1. Cloud Concepts</td><td>24%</td></tr>
+                            <tr><td>2. Security and Compliance</td><td>30%</td></tr>
+                            <tr><td>3. Cloud Technology and Services</td><td>34%</td></tr>
+                            <tr><td>4. Billing, Pricing and Support</td><td>12%</td></tr>
+                        </table>
+                    </div>
+                    <div class="column">
+                        <h3>How to study</h3>
+                        <ul>
+                            <li><strong>AWS Skill Builder</strong> — free "Cloud Practitioner Essentials" course and the official practice question set</li>
+                            <li>Read the <strong>CLF-C02 exam guide</strong> and the whitepapers: <em>Overview of Amazon Web Services</em>, <em>How AWS Pricing Works</em>, <em>Well-Architected Framework</em></li>
+                            <li>Skim each core service's <strong>FAQ</strong> — if you can answer the FAQ, you can answer the exam</li>
+                            <li>Take a full-length practice exam under time; review every wrong answer</li>
+                            <li>Keep doing what you did today: build it, break it, fix it</li>
+                        </ul>
+                        <h3>Answering technique</h3>
+                        <ul>
+                            <li>Look for the keyword ("cache", "DDoS", "single bill", "interruptible") — it usually names the service</li>
+                            <li>Prefer the <em>managed</em> service, the <em>least-privilege</em> option and the <em>Multi-AZ</em> design</li>
+                            <li>Eliminate answers that violate the Shared Responsibility Model</li>
+                        </ul>
+                        <div class="success"><p><strong>Recommended next step:</strong> schedule the exam within 2–4 weeks while today is fresh.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Practice questions -->
+            <section>
+                <h2><span class="emoji">❓</span> Practice Questions — Round 1</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>1.</strong> A company wants to run a nightly batch job that can be interrupted and restarted without harm. Which EC2 purchasing option is the <em>most</em> cost-effective?</p>
+                        <ul><li>A. On-Demand</li><li>B. Reserved Instances</li><li>C. Spot Instances</li><li>D. Dedicated Hosts</li></ul>
+                        <div class="quiz-answer fragment"><strong>C.</strong> Spot Instances offer up to 90% off for interruptible workloads.</div>
+                        <p><strong>2.</strong> Under the Shared Responsibility Model, which task is the customer's responsibility?</p>
+                        <ul><li>A. Replacing failed disks in the data center</li><li>B. Patching the guest operating system on EC2</li><li>C. Maintaining the hypervisor</li><li>D. Physical access control to facilities</li></ul>
+                        <div class="quiz-answer fragment"><strong>B.</strong> Everything <em>in</em> the instance is yours; the facility, hardware and hypervisor are AWS's.</div>
+                    </div>
+                    <div class="column">
+                        <p><strong>3.</strong> Which AWS service lets an application running on EC2 access S3 <em>without</em> storing credentials on the instance?</p>
+                        <ul><li>A. IAM user with access keys</li><li>B. IAM role attached to the instance</li><li>C. AWS KMS</li><li>D. Amazon Cognito</li></ul>
+                        <div class="quiz-answer fragment"><strong>B.</strong> Roles provide temporary, automatically rotated credentials — exactly what you used in Lab 5.</div>
+                        <p><strong>4.</strong> A firewall that is <em>stateless</em> and operates at the <em>subnet</em> level is a:</p>
+                        <ul><li>A. Security group</li><li>B. AWS WAF web ACL</li><li>C. Network ACL</li><li>D. AWS Shield</li></ul>
+                        <div class="quiz-answer fragment"><strong>C.</strong> Network ACLs are stateless and subnet-scoped; security groups are stateful and instance-scoped.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2><span class="emoji">❓</span> Practice Questions — Round 2</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <p><strong>5.</strong> Which service provides a single consolidated bill and shared volume discounts across many AWS accounts?</p>
+                        <ul><li>A. AWS Budgets</li><li>B. AWS Organizations</li><li>C. AWS Cost Explorer</li><li>D. AWS Control Tower</li></ul>
+                        <div class="quiz-answer fragment"><strong>B.</strong> Organizations' consolidated billing. Control Tower <em>uses</em> Organizations to build a landing zone.</div>
+                        <p><strong>6.</strong> A company needs to archive compliance records for 10 years and can wait up to 12 hours to retrieve them. Which storage class is the lowest cost?</p>
+                        <ul><li>A. S3 Standard-IA</li><li>B. S3 Intelligent-Tiering</li><li>C. S3 Glacier Instant Retrieval</li><li>D. S3 Glacier Deep Archive</li></ul>
+                        <div class="quiz-answer fragment"><strong>D.</strong> Deep Archive — lowest cost, 12–48 hour retrieval.</div>
+                    </div>
+                    <div class="column">
+                        <p><strong>7.</strong> Which TWO actions improve the availability of an application running on EC2? (Choose two)</p>
+                        <ul><li>A. Deploy instances in multiple Availability Zones behind an Elastic Load Balancer</li><li>B. Use a larger instance type</li><li>C. Use an Auto Scaling group to replace unhealthy instances</li><li>D. Enable S3 versioning</li><li>E. Purchase Reserved Instances</li></ul>
+                        <div class="quiz-answer fragment"><strong>A and C.</strong> Multi-AZ + ELB and Auto Scaling self-healing are the availability levers; B, D, E address other concerns.</div>
+                        <p><strong>8.</strong> Which service should a company use to receive an alert when its monthly AWS spend is forecast to exceed $5,000?</p>
+                        <ul><li>A. AWS Cost Explorer</li><li>B. AWS Trusted Advisor</li><li>C. AWS Budgets</li><li>D. Amazon CloudWatch</li></ul>
+                        <div class="quiz-answer fragment"><strong>C.</strong> Budgets sends threshold alerts on actual or forecasted cost — you created one in Lab 8.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Close -->
+            <section class="title-slide">
+                <h1><span class="emoji">🎉</span> Congratulations!</h1>
+                <div class="aws-logo">You built a real AWS environment today</div>
+                <div class="two-column" style="height:auto; text-align:left; margin-top:20px;">
+                    <div class="column">
+                        <h3>What you built</h3>
+                        <ul>
+                            <li>An IAM group, user and EC2 role with least privilege</li>
+                            <li>A VPC with two subnets, security groups and a network ACL rule</li>
+                            <li>Two EC2 web servers, a custom AMI and an automated deployment</li>
+                            <li>A versioned S3 bucket serving a static website</li>
+                            <li>A Lambda function with an HTTPS endpoint</li>
+                            <li>A MySQL database on RDS reached only through the web security group</li>
+                            <li>A budget, a pricing comparison and a rightsized instance</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Before you leave</h3>
+                        <ul>
+                            <li>✅ Confirm your Lab 8 cleanup checklist is complete</li>
+                            <li>📅 Book the CLF-C02 exam</li>
+                            <li>📚 AWS Skill Builder → Cloud Practitioner Essentials + practice question set</li>
+                            <li>🧪 Create your own free-tier account and rebuild today's labs from memory</li>
+                        </ul>
+                        <div class="success"><p><strong>Thank you!</strong> Questions, feedback and war stories welcome.</p></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1400,
+            height: 1100,
+            margin: 0.03,
+            minScale: 0.4,
+            maxScale: 2.0,
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            keyboard: true,
+            overview: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            embedded: false,
+            autoSlide: 0,
+            loop: false,
+            shuffle: false,
+            fragments: true,
+            pdfSeparateFragments: false,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            highlight: { highlightOnLoad: true, theme: 'monokai' }
+        });
+
+        // ---- Auto-fit: make every slide fill the page without overflowing ----
+        // Wraps each slide's content in .fit and applies CSS zoom so the content fits the slide
+        // in both height and width. Wide elements (diagrams, tables, code) shrink individually so
+        // they never limit how much the rest of the slide can grow.
+        const GROW = { content: 1.6, title: 1.5, lab: 1.3, divider: 1.0 }, MIN_SHRINK = 0.45;
+        function shrinkWide(inner) {
+            inner.querySelectorAll('.architecture-diagram, pre, table').forEach(el => {
+                el.style.zoom = 1;
+                const parent = el.parentElement;
+                const pw = parent.clientWidth, ew = Math.max(el.scrollWidth, el.getBoundingClientRect().width / (parent.getBoundingClientRect().width / pw || 1));
+                const ratio = Math.max(el.scrollWidth / (el.clientWidth || 1), ew / (pw || 1));
+                if (ratio > 1.002) el.style.zoom = Math.max(0.4, 0.985 / ratio);
+            });
+        }
+        function contentBox(inner) {
+            const r = inner.getBoundingClientRect();
+            let right = r.right, bottom = r.bottom;
+            inner.querySelectorAll('*').forEach(el => {
+                const b = el.getBoundingClientRect();
+                if (b.width === 0 && b.height === 0) return;
+                const ow = el.clientWidth ? Math.max(1, el.scrollWidth / el.clientWidth) : 1;
+                if (b.left + b.width * ow > right) right = b.left + b.width * ow;
+                if (b.bottom > bottom) bottom = b.bottom;
+            });
+            return { w: right - r.left, h: bottom - r.top };
+        }
+        // Offscreen stage with the slide's exact dimensions and no Reveal transforms — the same
+        // measurement works in normal presentation mode and in ?print-pdf mode.
+        function stage() {
+            let st = document.getElementById('fit-stage');
+            if (!st) {
+                st = document.createElement('div');
+                st.id = 'fit-stage'; st.className = 'reveal';
+                st.style.cssText = 'position:fixed;left:-30000px;top:0;width:1400px;height:1100px;overflow:hidden;visibility:hidden;pointer-events:none;';
+                st.innerHTML = '<div class="slides" style="position:relative;width:1400px;height:1100px;transform:none;"></div>';
+                document.body.appendChild(st);
+            }
+            return st.firstElementChild;
+        }
+        function fitOne(section, inner) {
+            const kind = section.classList.contains('section-divider') ? 'divider'
+                       : section.classList.contains('title-slide') ? 'title'
+                       : section.classList.contains('lab-callout') ? 'lab' : 'content';
+            const maxZoom = GROW[kind];
+            const probe = document.createElement('section');
+            probe.className = section.className.replace(/\b(present|past|future|stack)\b/g, '').trim();
+            probe.style.cssText = 'display:flex;position:absolute;left:0;top:0;width:1400px;height:1100px;transform:none;visibility:hidden;';
+            const clone = inner.cloneNode(true);
+            probe.appendChild(clone);
+            stage().appendChild(probe);
+            const cs = getComputedStyle(probe);
+            const availH = probe.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+            const availW = probe.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            const targetH = availH * 0.985, targetW = availW * 1.002;
+            let zoom = 1;
+            const apply = z => { zoom = z; clone.style.zoom = z; shrinkWide(clone); };
+            const fits = () => { const n = contentBox(clone); return n.h <= targetH && n.w <= targetW; };
+            let lo = MIN_SHRINK, hi = maxZoom;
+            apply(hi);
+            if (!fits()) {
+                apply(lo);
+                if (fits()) {
+                    for (let i = 0; i < 8; i++) {
+                        const mid = (lo + hi) / 2;
+                        apply(mid);
+                        if (fits()) lo = mid; else hi = mid;
+                    }
+                    apply(lo);
+                }
+            }
+            // copy the result (wrapper zoom + per-element zooms for wide diagrams/tables) to the real slide
+            inner.style.zoom = zoom;
+            const src = clone.querySelectorAll('.architecture-diagram, pre, table');
+            inner.querySelectorAll('.architecture-diagram, pre, table').forEach((el, i) => { el.style.zoom = src[i] ? src[i].style.zoom : ''; });
+            probe.remove();
+        }
+        function fitSlides() {
+            document.querySelectorAll('.reveal .slides section').forEach(section => {
+                if (section.closest('#fit-stage')) return;
+                let inner = section.querySelector(':scope > .fit');
+                if (!inner) {
+                    inner = document.createElement('div');
+                    inner.className = 'fit';
+                    while (section.firstChild) inner.appendChild(section.firstChild);
+                    section.appendChild(inner);
+                }
+                fitOne(section, inner);
+            });
+            Reveal.layout();
+        }
+        Reveal.on('ready', fitSlides);
+        window.addEventListener('load', () => setTimeout(fitSlides, 150));
+        if (document.fonts) document.fonts.ready.then(() => setTimeout(fitSlides, 300));
+        window.fitSlides = fitSlides;
+
+        const progressIndicator = document.createElement('div');
+        progressIndicator.className = 'progress-indicator';
+        progressIndicator.textContent = 'AWS Cloud Practitioner • 1 Day';
+        document.body.appendChild(progressIndicator);
+    </script>
+</body>
+</html>
