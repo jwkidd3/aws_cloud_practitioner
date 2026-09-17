@@ -1,13 +1,13 @@
 #!/bin/bash
 # Regenerates every PDF under pdf/ from its source. Run from the course root after editing any lab or the deck.
 #   ./build-pdfs.sh              everything (deck takes ~1 min)
-#   ./build-pdfs.sh --labs-only  skip the deck
+#   ./build-pdfs.sh --no-deck     skip the deck
 # Requires: Google Chrome, node 22+, pandoc, pdfunite (poppler), python3.
 set -euo pipefail
 cd "$(dirname "$0")"
-OUT="$PWD/pdf"; mkdir -p "$OUT/labs"
+OUT="$PWD/pdf"; mkdir -p "$OUT"
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"; kill $SRV 2>/dev/null || true' EXIT
-SKIP_DECK=false; [[ "${1:-}" == "--labs-only" ]] && SKIP_DECK=true
+SKIP_DECK=false; [[ "${1:-}" == "--no-deck" ]] && SKIP_DECK=true
 
 # --- 1. Serve the course root so the deck's CDN assets and hash routing work ---
 PORT=8791
@@ -20,7 +20,7 @@ if ! $SKIP_DECK; then
     "$OUT/aws_cloud_practitioner_slides.pdf"
 fi
 
-# --- 3. Markdown (labs, README, instructor notes): pandoc -> HTML, then printed on US Letter ---
+# --- 3. Markdown (README, instructor notes): pandoc -> HTML, then printed on US Letter ---
 cat > "$TMP/print.css" <<'CSS'
 body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; line-height: 1.4; color: #222; max-width: none; margin: 0; }
 h1 { color: #232f3e; border-bottom: 3px solid #ff9900; padding-bottom: 4px; font-size: 20pt; }
@@ -49,13 +49,10 @@ open(p,'w').write(t)
 PY
 }
 JOBS=()
-for d in lab-exercises/lab0*; do
-  n=$(basename "$d"); md2html "$d/README.md" "$TMP/$n.html"; JOBS+=("$TMP/$n.html=$OUT/labs/$n.pdf")
-done
 md2html README.md "$TMP/README.html";                   JOBS+=("$TMP/README.html=$OUT/README.pdf")
 md2html INSTRUCTOR_NOTES.md "$TMP/INSTRUCTOR_NOTES.html"; JOBS+=("$TMP/INSTRUCTOR_NOTES.html=$OUT/INSTRUCTOR_NOTES.pdf")
 
-# --- 4. Combined student lab manual (cover + all labs) ---
+# --- 4. Student lab manual: cover + all eight labs in one PDF ---
 python3 - "$TMP" <<'PY'
 import sys,subprocess,glob
 T=sys.argv[1]; css=open(f'{T}/print.css').read()

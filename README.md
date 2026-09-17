@@ -102,7 +102,6 @@ aws_cloud_pract/
 ├── pdf/                                     # PDF copies of every deliverable (rebuild with ./build-pdfs.sh)
 │   ├── aws_cloud_practitioner_slides.pdf    # Deck, one page per slide
 │   ├── aws_cloud_practitioner_lab_manual.pdf# All 8 labs in one student handout
-│   ├── labs/lab01.pdf … lab08.pdf           # Individual labs
 │   ├── README.pdf
 │   └── INSTRUCTOR_NOTES.pdf
 └── lab-exercises/
