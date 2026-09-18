@@ -103,6 +103,7 @@ aws_cloud_pract/
     ├── lab03.md                             # Creating EC2 instances
     ├── lab04.md                             # Deploying a web application on EC2
     ├── lab05.md                             # S3 object storage
+    ├── lab05-index.html                     # Sample page students upload in Lab 5
     ├── lab06.md                             # Lambda serverless functions
     ├── lab07.md                             # RDS relational database
     └── lab08.md                             # Cost optimization + cleanup

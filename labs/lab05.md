@@ -6,10 +6,7 @@
 - Host a static website from S3
 - Read the bucket from EC2 using the IAM role (`userN-ec2-role`)
 
-**Before you start:** save this as `index.html` on your computer:
-```html
-<h1>Served from Amazon S3 — version 1</h1>
-```
+**Before you start:** download [`lab05-index.html`](lab05-index.html) and save it on your computer as **`index.html`**. (It is a one-page site that says "Version 1".)
 
 ---
 
@@ -21,7 +18,7 @@
 ## Exercise 5.2: Upload and Version (6 min)
 1. Open the bucket → **Upload** → **Add files** → `index.html` → **Upload** → **Close**.
 2. Click `index.html` → **Open**. *Access Denied* — objects are private by default.
-3. Edit the file on your computer to say **version 2** and upload it again.
+3. Open `index.html` in a text editor, change **Version 1** to **Version 2**, save, and upload it again.
 4. In the Objects list, toggle **Show versions**. Two versions exist; the older one is still there and can be downloaded. That is how versioning protects against overwrites and deletes.
 
 ## Exercise 5.3: Static Website (10 min)
