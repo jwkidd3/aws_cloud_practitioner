@@ -199,19 +199,8 @@
 
         .reveal .quiz-answer { background: #d4edda; border-left: 4px solid var(--success-color); padding: 6px 10px; margin-top: 10px; border-radius: 4px; font-size: 0.7em; }
 
-        @media screen and (min-width: 1600px) { .reveal { font-size: 32px; } }
-        @media screen and (max-width: 1400px) {
-            .reveal { font-size: 28px; }
-            .reveal ul, .reveal ol { font-size: 0.7em; }
-        }
-        @media screen and (max-width: 1024px) {
-            .reveal { font-size: 24px; }
-            .reveal .two-column, .reveal .three-column { flex-direction: column; gap: 15px; }
-            .reveal .pillar-grid { grid-template-columns: repeat(2, 1fr); }
-            .reveal .service-grid { grid-template-columns: repeat(2, 1fr); }
-            .reveal .slides section { padding: 8px; }
-        }
-
+        /* No viewport media queries on purpose: slide layout is fixed at 1400x1100 and Reveal scales
+           the whole slide to the window, so text never re-wraps after the auto-fit has run. */
 
         /* Lab callout slides */
         .reveal .slides section.lab-callout {
@@ -1780,6 +1769,8 @@ CloudWatch CPU &lt; 30%  -->  alarm  -->  ASG removes an instance
         window.addEventListener('load', () => setTimeout(fitSlides, 150));
         if (document.fonts) document.fonts.ready.then(() => setTimeout(fitSlides, 300));
         window.fitSlides = fitSlides;
+        // Safety net: re-fit if the window changes size (e.g. moving to a projector or going full screen)
+        let resizeTimer; window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitSlides, 250); });
 
         const progressIndicator = document.createElement('div');
         progressIndicator.className = 'progress-indicator';
