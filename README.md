@@ -8,36 +8,10 @@
 
 ## Course Overview
 
-This course provides a comprehensive introduction to Amazon Web Services (AWS). It covers the fundamental concepts of cloud computing, core AWS services, security best practices, and cost optimization strategies. By the end of this course, learners will have a solid understanding of AWS and be able to design, deploy, and manage cloud-based applications on the AWS platform.
+The full course outline — description, objectives, module breakdown, lab list and certification alignment — is in **[OUTLINE.md](OUTLINE.md)** ([PDF](OUTLINE.pdf)). That is the document to send to clients and students.
 
-**Length:** 1 day (9:00 AM – 4:00 PM)
-**Format:** ~70% hands-on labs / ~30% theory (225 min labs, 105 min theory, plus breaks and lunch)
-**Level:** Introductory — no prior AWS experience assumed
-**Environment:** AWS Management Console in a shared AWS account; each student works in an **assigned Region**. No IDE or local tooling required.
-
-## Course Objectives
-
-Upon completion of this course, learners will be able to:
-
-- Explain the core concepts of cloud computing and the benefits of using AWS
-- Identify and describe key AWS services, including EC2, S3, VPC, IAM, and more
-- Understand the AWS global infrastructure and regions
-- Create and manage AWS resources using the AWS Management Console and CLI
-- Implement basic security best practices on AWS
-- Optimize AWS costs using various strategies
-- Prepare for the AWS Certified Cloud Practitioner exam
-
-## Course Outline
-
-| Module | Topics |
-|---|---|
-| **1. Introduction to Cloud Computing** | What is cloud computing · benefits · types (public, private, hybrid, multi-cloud) · IaaS / PaaS / SaaS |
-| **2. Core AWS Services** | **2A Security, Identity & Compliance:** IAM, security groups & NACLs, KMS · **2B Networking & Content Delivery:** VPC, Route 53, CloudFront · **2C Compute:** EC2 (instance types, AMIs, key pairs, security groups), Lambda · **2D Storage:** S3, EBS · **2E Databases:** RDS, DynamoDB |
-| **3. AWS Global Infrastructure** | Regions and Availability Zones · edge locations · Global Accelerator |
-| **4. Billing and Cost Optimization** | Pricing models · Cost Explorer · Reserved Instances and Savings Plans · rightsizing · Auto Scaling |
-| **5. Best Practices and Troubleshooting** | Building secure and reliable applications · common troubleshooting techniques · Well-Architected Framework · exam preparation |
-
-Module 2 is taught in five short blocks, each immediately followed by its lab, so teaching content always precedes hands-on work.
+- **Length:** 1 day (9:00 AM – 4:00 PM) · **Level:** Introductory · **Format:** ~70% hands-on labs / ~30% theory
+- **Environment:** AWS Management Console in a shared AWS account; each student works in an **assigned Region**. No IDE or local tooling required.
 
 ## Daily Schedule
 
@@ -89,7 +63,8 @@ Every lab runs in the console with a per-student `userN-` naming prefix, and eac
 
 ```
 aws_cloud_pract/
-├── README.md                                # This file — overview and schedule
+├── README.md                                # This file — schedule, materials, how to run the course
+├── OUTLINE.md / OUTLINE.pdf                 # Client-facing course outline
 ├── tools/
 │   ├── build-pdfs.sh                        # Regenerates both PDFs from the sources (~1 min)
 │   └── print.mjs                            # Chrome DevTools PDF printer used by build-pdfs.sh

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Regenerates the deck and lab-manual PDFs next to their sources. Run after editing any lab or the deck (from any directory).
+# Regenerates the outline, deck and lab-manual PDFs next to their sources. Run after editing any lab or the deck (from any directory).
 #   tools/build-pdfs.sh              everything (deck takes ~1 min)
 #   tools/build-pdfs.sh --no-deck    skip the deck
 # Requires: Google Chrome, node 22+, pandoc, pdfunite (poppler), python3.
@@ -48,6 +48,7 @@ open(p,'w').write(t)
 PY
 }
 JOBS=()
+md2html OUTLINE.md "$TMP/OUTLINE.html"; JOBS+=("$TMP/OUTLINE.html=$PWD/OUTLINE.pdf")
 
 # --- 4. Student lab manual: cover + all eight labs in one PDF ---
 python3 - "$TMP" <<'PY'
