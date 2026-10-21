@@ -56,23 +56,6 @@ Upon completion of this course, learners will be able to:
 
 ---
 
-## Hands-on Labs
-
-Module 2 is taught in five short blocks, each followed immediately by its lab, so teaching content always precedes hands-on work. Each lab builds on the previous one: the VPC from Lab 2 hosts the servers from Labs 3–4 and the database from Lab 7, and the IAM role from Lab 1 is used from EC2 in Labs 3 and 5. The final lab ends with a complete cleanup checklist.
-
-| Lab | Title | Duration |
-|---|---|---|
-| 1 | Configuring IAM Roles and Policies | 30 min |
-| 2 | Configuring Security Groups and Network ACLs | 30 min |
-| 3 | Creating EC2 Instances | 25 min |
-| 4 | Deploying a Web Application on EC2 | 30 min |
-| 5 | Using S3 for Object Storage | 25 min |
-| 6 | Implementing Serverless Functions with Lambda | 25 min |
-| 7 | Setting Up a Relational Database with RDS | 30 min |
-| 8 | Implementing Cost Optimization Strategies | 30 min |
-
----
-
 ## Certification Alignment
 
 The course maps to the four domains of the **AWS Certified Cloud Practitioner (CLF-C02)** exam — 65 questions in 90 minutes, passing score 700/1000.
