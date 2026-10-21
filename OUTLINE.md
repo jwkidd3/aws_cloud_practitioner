@@ -1,10 +1,5 @@
 # AWS Cloud Practitioner
 
-- **Length:** 1 day (9:00 AM – 4:00 PM)
-- **Level:** Introductory — no prior AWS experience assumed
-- **Format:** ~70% hands-on labs / ~30% theory (225 minutes of labs, 105 minutes of lecture, plus breaks and lunch)
-- **Environment:** AWS Management Console in a shared AWS account; each student works in an assigned Region. No IDE or local tooling required.
-
 This course provides a comprehensive introduction to Amazon Web Services (AWS). It covers the fundamental concepts of cloud computing, core AWS services, security best practices, and cost optimization strategies. By the end of this course, learners will have a solid understanding of AWS and be able to design, deploy, and manage cloud-based applications on the AWS platform.
 
 ---
